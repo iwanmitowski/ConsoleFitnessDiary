@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessDiary", "FitnessDiary\FitnessDiary.csproj", "{09D0686B-667A-4A58-9B03-32DC3B51C2B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessDiary.Tests", "FitnessDiary.Tests\FitnessDiary.Tests.csproj", "{38E3116C-3DC5-496F-BC82-4C6351A73E11}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{09D0686B-667A-4A58-9B03-32DC3B51C2B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09D0686B-667A-4A58-9B03-32DC3B51C2B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09D0686B-667A-4A58-9B03-32DC3B51C2B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09D0686B-667A-4A58-9B03-32DC3B51C2B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38E3116C-3DC5-496F-BC82-4C6351A73E11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38E3116C-3DC5-496F-BC82-4C6351A73E11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38E3116C-3DC5-496F-BC82-4C6351A73E11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38E3116C-3DC5-496F-BC82-4C6351A73E11}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BFC041B2-FC46-4642-AF9F-572757B33F22}
+	EndGlobalSection
+EndGlobal
