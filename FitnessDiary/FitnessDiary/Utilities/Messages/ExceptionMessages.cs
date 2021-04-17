@@ -13,5 +13,8 @@ namespace FitnessDiary.Utilities.Messages
         public const string InvalidRepetitions = "Repetitions cannot be less or equal to zero";
         public const string InvalidMaxLiftedWeightZeroOrLess = "Max lifted weight cannot be less or equal to zero";
         public const string InvalidMaxLiftedWeightLessThanCurrent= "Max lifted weight cannot be less or equal to zero";
+        public const string InvalidNumber = "The number cannot be less or equal to zero";
+        public const string NoExercisesInTheProgram = "There are no exercises to remove";
+
     }
 }

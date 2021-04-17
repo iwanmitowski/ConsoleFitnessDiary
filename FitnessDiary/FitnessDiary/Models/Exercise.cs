@@ -117,7 +117,7 @@ namespace FitnessDiary.Models
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine($"E: {this.Name}");
-            sb.AppendLine($"{this.Sets} x {this.MinimumRepetitions}-{this.MaximumRepetitions} Reps");
+            sb.AppendLine($"   {this.Sets} x {this.MinimumRepetitions}-{this.MaximumRepetitions} Reps");
             return sb.ToString().Trim();
         }
     }
