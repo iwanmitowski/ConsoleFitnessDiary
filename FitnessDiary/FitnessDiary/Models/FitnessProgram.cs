@@ -1,32 +1,31 @@
 ﻿using FitnessDiary.Models.Contracts;
+using FitnessDiary.Utilities.Enums;
 using FitnessDiary.Utilities.Messages;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FitnessDiary.Models
 {
     public class FitnessProgram : IFitnessProgram
     {
-        private readonly Dictionary<DayOfWeek, List<IExercise>> exercises;
+
+        private readonly Dictionary<WeekDays, List<IExercise>> exercises;
         public FitnessProgram()
         {
-            this.exercises = new Dictionary<DayOfWeek, List<IExercise>>();
+            this.exercises = new Dictionary<WeekDays, List<IExercise>>();
             CreateListForEachWeekDay();
         }
 
-        public IReadOnlyDictionary<DayOfWeek, List<IExercise>> Exercises => exercises;
+        public IReadOnlyDictionary<WeekDays, List<IExercise>> Exercises => exercises;
 
-        public void Add(DayOfWeek day, IExercise exercise)
+        public void Add(WeekDays day, IExercise exercise)
         {
             this.exercises[day].Add(exercise);
         }
 
         //In Controller the number should be reduced by 1
-        public void Insert(DayOfWeek day, int number, IExercise exercise)
+        public void Insert(WeekDays day, int number, IExercise exercise)
         {
             CheckNumber(number);
 
@@ -34,16 +33,16 @@ namespace FitnessDiary.Models
 
         }
 
-        public void Update(DayOfWeek day, int number, IExercise exercise)
+        public void Update(WeekDays day, int number, IExercise exercise)
         {
             CheckNumber(number);
             this.exercises[day][number] = exercise;
         }
 
-        public void Remove(DayOfWeek day, int number)
+        public void Remove(WeekDays day, int number)
         {
             CheckNumber(number);
-            if (this.exercises[day].Count==0)
+            if (this.exercises[day].Count == 0)
             {
                 throw new InvalidOperationException(ExceptionMessages.NoExercisesInTheProgram);
             }
@@ -52,98 +51,195 @@ namespace FitnessDiary.Models
 
         public void ShowDaily()
         {
-            DayOfWeek today = DateTime.Now.DayOfWeek;
+            WeekDays today = (WeekDays)Enum.Parse(typeof(WeekDays),DateTime.Now.DayOfWeek.ToString());
 
-            int longestExerciseName = this.exercises[today].OrderByDescending(x => x.Name.Length).First().Name.Length + 9;
+            int longestExerciseName = GetLongestExerciseName("daily");
+            int rowCounter = 1;
 
-            Console.WriteLine($"{today}'s workout:");
+            Table.SetWindowSize();
+            //Console.Clear();
+            Table.SetTableWidth(longestExerciseName * 2 + 7);
+            Table.PrintLine();
+            Table.PrintRow("Number", $"{today}");
+            Table.PrintLine();
 
-            // printProgramLogic but setting the row/col
-
-            for (int i = 0; i < this.exercises[today].Count; i++)
+            foreach (var exercise in this.exercises[today])
             {
-                Console.WriteLine(new string('*', longestExerciseName));
-                var exercise = this.exercises[today][i];
-                Console.WriteLine($"{i + 1}. {exercise}");
-                if (i == this.exercises[today].Count - 1)
-                {
-                    Console.WriteLine(new string('*', longestExerciseName));
-                }
+                Table.PrintRow($"{rowCounter++}", $"{exercise}");
+                Table.PrintRow("", $"{exercise.Sets} Sets x {exercise.MinimumRepetitions}-{exercise.MaximumRepetitions} Reps");
+                Table.PrintLine();
             }
+            Table.ShowTheBeginningOfTheTable();
 
         }
+
 
         public void ShowWeekly()
         {
-            PrintProgram(FillMatrix());
+            int longestExerciseName = GetLongestExerciseName("weekly");
+            int biggestExerciseCountAmongAllDays = GetBiggestExerciseCount();
+            int rowCounter = 1;
+
+            Table.SetWindowSize();
+            //Console.Clear();
+            Table.SetTableWidth(longestExerciseName * 8 + 9);
+            Table.PrintLine();
+            Table.PrintRow("Number", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
+            Table.PrintLine();
+
+
+            for (int i = 0; i < biggestExerciseCountAmongAllDays; i++)
+            {
+                int colCounter = 0;
+                WeekDays monday = WeekDays.Monday;
+
+                bool isValidMon = this.exercises[monday + colCounter++].Count() >= i + 1 ;
+                bool isValidTue = this.exercises[monday + colCounter++].Count() >=i + 1;
+                bool isValidWed = this.exercises[monday + colCounter++].Count() >=i + 1;
+                bool isValidThr = this.exercises[monday + colCounter++].Count() >=i + 1;
+                bool isValidFri = this.exercises[monday + colCounter++].Count() >=i + 1;
+                bool isValidSat = this.exercises[monday + colCounter++].Count() >=i + 1;
+                bool isValidSun = this.exercises[monday + colCounter++].Count() >=i + 1;
+                               
+                string exerciseMonToString = string.Empty;
+                string exerciseTueToString = string.Empty;
+                string exerciseWedToString = string.Empty;
+                string exerciseThrToString = string.Empty;
+                string exerciseFriToString = string.Empty;
+                string exerciseSatToString = string.Empty;
+                string exerciseSunToString = string.Empty;
+
+                string exerciseMonFormating = string.Empty;
+                string exerciseTueFormating = string.Empty;
+                string exerciseWedFormating = string.Empty;
+                string exerciseThrFormating = string.Empty;
+                string exerciseFriFormating = string.Empty;
+                string exerciseSatFormating = string.Empty;
+                string exerciseSunFormating = string.Empty;
+
+                if (isValidMon)
+                {
+                    IExercise exerciseMon = this.exercises[monday][i];
+                    exerciseMonToString = $"{exerciseMon}";
+                    exerciseMonFormating = $"{$"{exerciseMon.Sets} Sets x {exerciseMon.MinimumRepetitions}-{exerciseMon.MaximumRepetitions} Reps"}";
+                }
+                if (isValidTue)
+                {
+                    IExercise exerciseTue = this.exercises[WeekDays.Tuesday][i];
+                    exerciseTueToString = $"{exerciseTue}";
+                    exerciseTueFormating = $"{$"{exerciseTue.Sets} Sets x {exerciseTue.MinimumRepetitions}-{exerciseTue.MaximumRepetitions} Reps"}";
+                }
+                if (isValidWed)
+                {
+                    IExercise exerciseWed = this.exercises[WeekDays.Wednesday][i];
+                    exerciseWedToString = $"{exerciseWed}";
+                    exerciseWedFormating = $"{$"{exerciseWed.Sets} Sets x {exerciseWed.MinimumRepetitions}-{exerciseWed.MaximumRepetitions} Reps"}";
+                }
+                if (isValidThr)
+                {
+                    IExercise exerciseThr = this.exercises[WeekDays.Thursday][i];
+                    exerciseThrToString = $"{exerciseThr}";
+                    exerciseThrFormating = $"{$"{exerciseThr.Sets} Sets x {exerciseThr.MinimumRepetitions}-{exerciseThr.MaximumRepetitions} Reps"}";
+                }
+                if (isValidFri)
+                {
+                    IExercise exerciseFri = this.exercises[WeekDays.Friday][i];
+                    exerciseFriToString = $"{exerciseFri}";
+                    exerciseFriFormating = $"{$"{exerciseFri.Sets} Sets x {exerciseFri.MinimumRepetitions}-{exerciseFri.MaximumRepetitions} Reps"}";
+                }
+                if (isValidSat)
+                {
+                    IExercise exerciseSat = this.exercises[WeekDays.Saturday][i];
+                    exerciseSatToString = $"{exerciseSat}";
+                    exerciseSatFormating = $"{$"{exerciseSat.Sets} Sets x {exerciseSat.MinimumRepetitions}-{exerciseSat.MaximumRepetitions} Reps"}";
+                }
+                if (isValidSun)
+                {
+                    IExercise exerciseSun = this.exercises[WeekDays.Sunday][i];
+                    exerciseSunToString = $"{exerciseSun}";
+                    exerciseSunFormating = $"{$"{exerciseSun.Sets} Sets x {exerciseSun.MinimumRepetitions}-{exerciseSun.MaximumRepetitions} Reps"}";
+                }
+
+                Table.PrintRow($"{rowCounter++}",
+                    $"{exerciseMonToString}",
+                    $"{exerciseTueToString}",
+                    $"{exerciseWedToString}",
+                    $"{exerciseThrToString}",
+                    $"{exerciseFriToString}",
+                    $"{exerciseSatToString}",
+                    $"{exerciseSunToString}");
+
+                Table.PrintRow("",
+                    exerciseMonFormating,
+                    exerciseTueFormating,
+                    exerciseWedFormating,
+                    exerciseThrFormating,
+                    exerciseFriFormating,
+                    exerciseSatFormating,
+                    exerciseSunFormating
+                    );
+                Table.PrintLine();
+
+            }
+
+            Table.ShowTheBeginningOfTheTable();
+
         }
 
-        private void PrintProgram(string[,] matrix)
+        private int GetBiggestExerciseCount()
         {
-            for (int row = 0; row < matrix.GetLength(0); row++)
-            {
-                for (int col = 0; col < matrix.GetLength(1); col++)
-                {
-                    Console.Write($"{matrix[row, col]}");
+            int biggest = 0;
 
+            foreach (var day in this.exercises)
+            {
+                int current = day.Value.Count();
+                
+                if (current > biggest)
+                {
+                    biggest = current;
                 }
-                Console.WriteLine();
             }
+
+            return biggest;
         }
 
-        private string[,] FillMatrix()
+        private int GetLongestExerciseName(string condition)
         {
-            int longestExerciseCount = exercises.OrderByDescending(x => x.Value.Count).First().Value.Count + 1;
-
-            string[,] matrix = new string[longestExerciseCount, 8];
-
-            matrix[0, 0] = "Numbers";
-            matrix[0, 1] = "Monday" + new string(' ', this.exercises[DayOfWeek.Monday].OrderByDescending(x => x.Name.Length).First().Name.Length);
-            matrix[0, 2] = "Tuesday" + new string(' ', this.exercises[DayOfWeek.Tuesday].OrderByDescending(x => x.Name.Length).First().Name.Length);
-            matrix[0, 3] = "Wednesday" + new string(' ', this.exercises[DayOfWeek.Wednesday].OrderByDescending(x => x.Name.Length).First().Name.Length);
-            matrix[0, 4] = "Thursday" + new string(' ', this.exercises[DayOfWeek.Thursday].OrderByDescending(x => x.Name.Length).First().Name.Length);
-            matrix[0, 5] = "Friday" + new string(' ', this.exercises[DayOfWeek.Friday].OrderByDescending(x => x.Name.Length).First().Name.Length);
-            matrix[0, 6] = "Saturday" + new string(' ', this.exercises[DayOfWeek.Saturday].OrderByDescending(x => x.Name.Length).First().Name.Length);
-            matrix[0, 7] = "Sunday" + new string(' ', this.exercises[DayOfWeek.Sunday].OrderByDescending(x => x.Name.Length).First().Name.Length);
-
-            for (int row = 1; row < matrix.GetLength(0); row++)
+            switch (condition)
             {
-                for (int col = 0; col < matrix.GetLength(1); col++)
-                {
-                    if (col == 0)
+                case "daily":
+
+                    WeekDays today = (WeekDays)Enum.Parse(typeof(WeekDays), DateTime.Now.DayOfWeek.ToString());
+                    return this.exercises[(WeekDays)today].OrderByDescending(x => x.Name.Length).First().Name.Length;
+
+                case "weekly":
+
+                    int longest = 0;
+
+                    foreach ((WeekDays day, List<IExercise> ex) in this.exercises)
                     {
-                        matrix[row, col] = $"{row}" + new string(' ', 7 - row.ToString().Length);
-                        continue;
+                        int current = this.exercises[day].OrderByDescending(x => x.Name.Length).First().Name.Length;
+
+                        if (current > longest)
+                        {
+                            longest = current;
+                        }
                     }
 
-                    //To get the proper day starting from 0
-                    DayOfWeek day = (DayOfWeek)col - 1;
-
-                    int longestExerciseName = this.exercises[day].OrderByDescending(x => x.Name.Length).First().Name.Length + 9;
-                    // col num is more tahn exercises
-                    if (col >= exercises[day].Count)
-                    {
-                        matrix[row, col] = "=/=" + new string(' ', longestExerciseName - 3);
-                    }
-                    else
-                    {
-                        matrix[row, col] = $"{exercises[day][col]}" + new string(' ', longestExerciseName - exercises[day][col].Name.Length);
-                    }
-                }
-                Console.WriteLine();
+                    return longest;
             }
 
-            return matrix;
+            return 0;
         }
         private void CreateListForEachWeekDay()
         {
-            exercises.Add(DayOfWeek.Monday, new List<IExercise>());
-            exercises.Add(DayOfWeek.Tuesday, new List<IExercise>());
-            exercises.Add(DayOfWeek.Wednesday, new List<IExercise>());
-            exercises.Add(DayOfWeek.Thursday, new List<IExercise>());
-            exercises.Add(DayOfWeek.Friday, new List<IExercise>());
-            exercises.Add(DayOfWeek.Saturday, new List<IExercise>());
-            exercises.Add(DayOfWeek.Sunday, new List<IExercise>());
+            exercises.Add(WeekDays.Monday, new List<IExercise>());
+            exercises.Add(WeekDays.Tuesday, new List<IExercise>());
+            exercises.Add(WeekDays.Wednesday, new List<IExercise>());
+            exercises.Add(WeekDays.Thursday, new List<IExercise>());
+            exercises.Add(WeekDays.Friday, new List<IExercise>());
+            exercises.Add(WeekDays.Saturday, new List<IExercise>());
+            exercises.Add(WeekDays.Sunday, new List<IExercise>());
         }
 
         private void CheckNumber(int number)

@@ -6,6 +6,8 @@ namespace FitnessDiary.Models
 {
     public class Exercise : IExercise
     {
+        private const int MaxNameLength = 24;
+
         private string name;
         private double maxLiftedWeight;
         private int sets;
@@ -29,9 +31,9 @@ namespace FitnessDiary.Models
             }
             private set
             {
-                if (string.IsNullOrWhiteSpace(value))
+                if (string.IsNullOrWhiteSpace(value)||value.Length>MaxNameLength)
                 {
-                    throw new ArgumentException(ExceptionMessages.InvalidName);
+                    throw new ArgumentException(string.Format(ExceptionMessages.InvalidName,MaxNameLength));
                 }
                 this.name = value;
             }
@@ -115,10 +117,7 @@ namespace FitnessDiary.Models
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"E: {this.Name}");
-            sb.AppendLine($"   {this.Sets} x {this.MinimumRepetitions}-{this.MaximumRepetitions} Reps");
-            return sb.ToString().Trim();
+            return $"{this.Name}";
         }
     }
 }
