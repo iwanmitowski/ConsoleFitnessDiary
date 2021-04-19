@@ -11,7 +11,7 @@ namespace FitnessDiary.Models.Contracts
     interface IFitnessProgram
     {
         IReadOnlyDictionary<WeekDays, List<IExercise>> Exercises { get; }
-        void Add(WeekDays day,IExercise exercise);
+        void Add(WeekDays day, IExercise exercise);
 
         void Insert(WeekDays day, int number, IExercise exercise);
 
@@ -22,6 +22,15 @@ namespace FitnessDiary.Models.Contracts
         void ShowWeekly();
 
         void ShowDaily();
+
+        //To think about these more:
+        void WriteDailyProgramInFile();
+        void ReadDailyProgramFromFile();
+        void WriteWeeklyProgramFromFile();
+        void ReadWeeklyProgramFromFile();
+        void UpdateExerciseMaxInFile();
+        void ReadExerciseMaxFromFile();
+      
 
     }
 }

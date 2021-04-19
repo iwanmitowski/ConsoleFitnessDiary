@@ -205,12 +205,13 @@ namespace FitnessDiary.Models
 
         private int GetLongestExerciseName(string condition)
         {
+            int minLength = 20;
             switch (condition)
             {
                 case "daily":
 
                     WeekDays today = (WeekDays)Enum.Parse(typeof(WeekDays), DateTime.Now.DayOfWeek.ToString());
-                    return this.exercises[(WeekDays)today].OrderByDescending(x => x.Name.Length).First().Name.Length;
+                    return Math.Max(minLength,this.exercises[(WeekDays)today].OrderByDescending(x => x.Name.Length).First().Name.Length);
 
                 case "weekly":
 
@@ -226,7 +227,7 @@ namespace FitnessDiary.Models
                         }
                     }
 
-                    return longest;
+                    return Math.Max(minLength,longest);
             }
 
             return 0;
