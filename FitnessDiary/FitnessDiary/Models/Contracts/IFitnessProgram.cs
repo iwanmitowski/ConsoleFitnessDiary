@@ -23,13 +23,7 @@ namespace FitnessDiary.Models.Contracts
 
         void ShowDaily();
 
-        //To think about these more:
-        void WriteDailyProgramInFile();
-        void ReadDailyProgramFromFile();
-        void WriteWeeklyProgramFromFile();
-        void ReadWeeklyProgramFromFile();
-        void UpdateExerciseMaxInFile();
-        void ReadExerciseMaxFromFile();
+        
       
 
     }

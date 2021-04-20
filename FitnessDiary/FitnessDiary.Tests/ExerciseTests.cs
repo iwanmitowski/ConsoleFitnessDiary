@@ -14,7 +14,7 @@ namespace FitnessDiary.Tests
         double maxLifted;
 
         [SetUp]
-        public void Setup()
+        public void SetUp()
         {
             name = "Bench press";
             sets = 3;
@@ -26,18 +26,19 @@ namespace FitnessDiary.Tests
         }
 
         [Test]
-        public void ConstructorShouldSetCorectly()
+        public void ConstructorShouldSetCorrectly()
         {
             Assert.IsNotNull(exercise);
         }
 
         [Test]
-        public void AddingMaxLiftedWeightShouldSetCorectly()
+        public void AddingMaxLiftedWeightShouldSetCorrectly()
         {
             double expected = 160.25;
             exercise.SetMaxLiftedWeight(maxLifted);
 
             Assert.AreEqual(expected, exercise.MaxLiftedWeight);
         }
+
     }
 }

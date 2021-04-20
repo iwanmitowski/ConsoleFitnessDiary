@@ -13,7 +13,7 @@ namespace FitnessDiary.Models
         private int sets;
         private int minimumRepetitions;
         private int maximumRepetitions;
-
+        //max cant be less than min
         public Exercise(string name, int sets, int minimumRepetitions, int maximumRepetitions)
         {
             Name = name;

@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using FitnessDiary.Models;
 using NUnit.Framework;
+using FitnessDiary.Utilities.Enums;
 
 namespace FitnessDiary.Tests
 {
-    class FitnessProgramTests
+   public class FitnessProgramTests
     {
         Exercise exercise1;
         Exercise exercise2;
@@ -25,51 +26,51 @@ namespace FitnessDiary.Tests
         }
 
         [Test]
-        public void ConstructorShouldSetCorectly()
+        public void ConstructorShouldSetCorrectly()
         {
             Assert.IsNotNull(fitnessProgram);
         }
 
         [Test]
-        public void AddShouldAddCorectly()
+        public void AddShouldAddCorrectly()
         {
-            fitnessProgram.Add(DayOfWeek.Monday, exercise1);
+            fitnessProgram.Add(WeekDays.Monday, exercise1);
 
-            Assert.That(fitnessProgram.Exercises[DayOfWeek.Monday].Contains(exercise1));
+            Assert.That(fitnessProgram.Exercises[WeekDays.Monday].Contains(exercise1));
         }
 
         [Test]
-        public void InsertShouldInsertCorectlyBetween()
+        public void InsertShouldInsertCorrectlyBetween()
         {
-            fitnessProgram.Add(DayOfWeek.Monday, exercise1);
-            fitnessProgram.Add(DayOfWeek.Monday, exercise3);
-            fitnessProgram.Insert(DayOfWeek.Monday, 1, exercise2);
+            fitnessProgram.Add(WeekDays.Monday, exercise1);
+            fitnessProgram.Add(WeekDays.Monday, exercise3);
+            fitnessProgram.Insert(WeekDays.Monday, 1, exercise2);
 
-            Assert.AreEqual(fitnessProgram.Exercises[DayOfWeek.Monday][1], exercise2);
+            Assert.AreEqual(fitnessProgram.Exercises[WeekDays.Monday][1], exercise2);
         }
 
         [Test]
         public void UpdatingShouldChangeTheExercise()
         {
-            fitnessProgram.Add(DayOfWeek.Monday, exercise1);
-            fitnessProgram.Update(DayOfWeek.Monday, 0, exercise2);
+            fitnessProgram.Add(WeekDays.Monday, exercise1);
+            fitnessProgram.Update(WeekDays.Monday, 0, exercise2);
 
-            Assert.AreEqual(fitnessProgram.Exercises[DayOfWeek.Monday][0], exercise2);
+            Assert.AreEqual(fitnessProgram.Exercises[WeekDays.Monday][0], exercise2);
         }
 
         [Test]
         public void RemoveShouldRemoveTheGivenExerciseNumber()
         {
-            fitnessProgram.Add(DayOfWeek.Monday, exercise1);
-            fitnessProgram.Remove(DayOfWeek.Monday, 0);
+            fitnessProgram.Add(WeekDays.Monday, exercise1);
+            fitnessProgram.Remove(WeekDays.Monday, 0);
 
-            Assert.That(fitnessProgram.Exercises[DayOfWeek.Monday].Contains(exercise1)==false);
+            Assert.That(fitnessProgram.Exercises[WeekDays.Monday].Contains(exercise1)==false);
         }
 
         [Test]
         public void RemoveShouldThrowExceptionIfThereAreNoExercsisesToRemove()
         {
-            Assert.Throws<InvalidOperationException>(() => fitnessProgram.Remove(DayOfWeek.Monday,1));
+            Assert.Throws<InvalidOperationException>(() => fitnessProgram.Remove(WeekDays.Monday, 1));
         }
 
     }
