@@ -3,6 +3,7 @@ using FitnessDiary.Core.Factory;
 using FitnessDiary.Models;
 using FitnessDiary.Utilities.Enums;
 using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace FitnessDiary

@@ -119,5 +119,16 @@ namespace FitnessDiary.Models
         {
             return $"{this.Name}";
         }
+
+        public void UpdateReps(int minReps,int maxReps)
+        {
+            this.MinimumRepetitions = minReps;
+            this.MaximumRepetitions = maxReps;
+        }
+
+        public void UpdateSets(int sets)
+        {
+            this.Sets = sets;
+        }
     }
 }

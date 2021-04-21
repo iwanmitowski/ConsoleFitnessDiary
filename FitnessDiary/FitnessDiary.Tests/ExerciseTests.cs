@@ -40,5 +40,26 @@ namespace FitnessDiary.Tests
             Assert.AreEqual(expected, exercise.MaxLiftedWeight);
         }
 
+        [TestCase(4)]
+        [TestCase(5)]
+        public void UpdatingSetsShouldUpdateCorrectly(int reps)
+        {
+            int expected = reps;
+            this.exercise.UpdateSets(reps);
+
+            Assert.AreEqual(expected, this.exercise.Sets);
+        }
+
+        [TestCase(4,5)]
+        [TestCase(5,6)]
+        public void UpdatingRepsShouldUpdateThemCorrectly(int min, int max)
+        {
+            int expectedMin = min;
+            int expectedMax = max;
+            this.exercise.UpdateReps(min, max);
+            Assert.AreEqual(expectedMin, this.exercise.MinimumRepetitions);
+            Assert.AreEqual(expectedMax, this.exercise.MaximumRepetitions);
+        }
+
     }
 }

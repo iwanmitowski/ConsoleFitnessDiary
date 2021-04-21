@@ -28,29 +28,32 @@ namespace FitnessDiary.Models
         {
             int numberToAdd = number - 1;
             CheckNumber(numberToAdd);
+            CheckNumberIfItsBiggerThanTheListCapacity(day, number);
 
-            this.exercises[day].Insert(number, exercise);
-
+            this.exercises[day].Insert(numberToAdd, exercise);
         }
 
-        public void Update(WeekDays day, int number, IExercise exercise)
+
+        public void Change(WeekDays day, int number, IExercise exercise)
         {
             int numberToAdd = number - 1;
             CheckNumber(numberToAdd);
+            CheckNumberIfItsBiggerThanTheListCapacity(day, number);
 
-            this.exercises[day][number] = exercise;
+            this.exercises[day][numberToAdd] = exercise;
         }
 
         public void Remove(WeekDays day, int number)
         {
             int numberToAdd = number - 1;
             CheckNumber(numberToAdd);
+            CheckNumberIfItsBiggerThanTheListCapacity(day, number);
 
             if (this.exercises[day].Count == 0)
             {
                 throw new InvalidOperationException(ExceptionMessages.NoExercisesInTheProgram);
             }
-            this.exercises[day].RemoveAt(number);
+            this.exercises[day].RemoveAt(numberToAdd);
         }
 
         public void ShowDaily()
@@ -259,6 +262,17 @@ namespace FitnessDiary.Models
             }
         }
 
+        private void CheckNumberIfItsBiggerThanTheListCapacity(WeekDays day, int numberToAdd)
+        {
+            int currentDayEx = this.exercises[day].Count;
+
+            if (numberToAdd>currentDayEx)
+            {
+                throw new ArgumentException(ExceptionMessages.InvalidNumberUpperBorder);
+            }
+
+            
+        }
 
     }
 }

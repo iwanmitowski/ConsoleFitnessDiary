@@ -14,5 +14,7 @@ namespace FitnessDiary
         public int MinimumRepetitions { get; }
         public int MaximumRepetitions { get; }
         void SetMaxLiftedWeight(double liftedWeight);
+        void UpdateSets(int sets);
+        void UpdateReps(int minReps, int maxReps);
     }
 }

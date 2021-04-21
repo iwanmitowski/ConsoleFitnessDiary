@@ -46,14 +46,14 @@ namespace FitnessDiary.Tests
             fitnessProgram.Add(WeekDays.Monday, exercise3);
             fitnessProgram.Insert(WeekDays.Monday, 1, exercise2);
 
-            Assert.AreEqual(fitnessProgram.Exercises[WeekDays.Monday][1], exercise2);
+            Assert.AreEqual(fitnessProgram.Exercises[WeekDays.Monday][1], exercise1);
         }
 
         [Test]
-        public void UpdatingShouldChangeTheExercise()
+        public void ChangeShouldChangeTheExercise()
         {
             fitnessProgram.Add(WeekDays.Monday, exercise1);
-            fitnessProgram.Update(WeekDays.Monday, 0, exercise2);
+            fitnessProgram.Change(WeekDays.Monday, 1, exercise2);
 
             Assert.AreEqual(fitnessProgram.Exercises[WeekDays.Monday][0], exercise2);
         }
@@ -62,7 +62,7 @@ namespace FitnessDiary.Tests
         public void RemoveShouldRemoveTheGivenExerciseNumber()
         {
             fitnessProgram.Add(WeekDays.Monday, exercise1);
-            fitnessProgram.Remove(WeekDays.Monday, 0);
+            fitnessProgram.Remove(WeekDays.Monday, 1);
 
             Assert.That(fitnessProgram.Exercises[WeekDays.Monday].Contains(exercise1)==false);
         }

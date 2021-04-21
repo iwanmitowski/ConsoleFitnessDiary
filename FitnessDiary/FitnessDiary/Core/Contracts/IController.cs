@@ -8,22 +8,22 @@ namespace FitnessDiary.Core.Contracts
 {
     //BONUS: Registering name on first opening and showing Welcome, back {name}?
 
-    //ExerciseRepository
-    //adding exercises, reading the exercises
+    //ExerciseHistory   (done)
+    //adding exercises, reading the exercises   (done)
 
 
-    //Create exercise or update if existing (reps/sets)
-    //Setting max lifted weight
-    //List with registered exercises ?!
+    //Create exercise or update if existing (reps/sets)  (done)
+    //Setting max lifted weight     (done)
+    //List with registered exercises    (done)
 
-    //Create fitness program if the file is empty
+    //Create fitness program (done) if the file is empty!!!!!!!!!
 
     //AddExercise
     //InsertExercise
     //RemoveExercise
     //Update
 
-    // The input number should be decreased with 1!!!!!
+    // The input number should be decreased with 1!!!!!     (done)
 
     //ShowDaily if registered
     //ShowWeekly if chosen option
@@ -38,15 +38,13 @@ namespace FitnessDiary.Core.Contracts
     {
         public string CreateExercise(string name, int sets, int minimumRepetitions, int maximumRepetitions);
         public string SetMaxLiftedWeightToExercise(string name, double liftedWeight);
-
-        //public string UpdateExerciseSets(string name, int sets);
-
-        //public string UpdateExerciseReps(string name, int reps);
-
-        //public string AddExerciseToTheEndOfTheProgram(string week, string exerciseName);
-        //public string InsertExerciseSomewhereInTheProgram(string week, int position ,string exerciseName);
-        //public string ChangeExerciseSomewhereInTheProgram(string week, int position ,string exerciseName);//Update
-        //public string RemoveExerciseFromPositionFromTheProgram(string week, int position ,string exerciseName);
+        public string UpdateExerciseSets(string name, int sets);
+        public string UpdateExerciseReps(string name, int minReps, int maxReps);
+        public string CreateFitnessProgram();
+        public string AddExerciseToTheEndOfTheProgram(string weekDay, string exerciseName);
+        public string InsertExerciseSomewhereInTheProgram(string weekDay, int position, string exerciseName);
+        public string ChangeExerciseSomewhereInTheProgramWithAnother(string weekDay, int position, string exerciseName);
+        public string RemoveExerciseFromPositionInTheProgram(string weekDay, int position);
 
         //public string ShowDailyProgram();
         //public string ShowWeeklyProgram();

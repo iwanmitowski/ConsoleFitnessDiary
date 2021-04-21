@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FitnessDiary.Models.Contracts
 {
-    interface IFitnessProgram
+    public interface IFitnessProgram
     {
         IReadOnlyDictionary<WeekDays, List<IExercise>> Exercises { get; }
         void Add(WeekDays day, IExercise exercise);
@@ -17,7 +17,7 @@ namespace FitnessDiary.Models.Contracts
 
         void Remove(WeekDays day, int number);
 
-        void Update(WeekDays day, int number, IExercise exercise);
+        void Change(WeekDays day, int number, IExercise exercise);
 
         void ShowWeekly();
 
