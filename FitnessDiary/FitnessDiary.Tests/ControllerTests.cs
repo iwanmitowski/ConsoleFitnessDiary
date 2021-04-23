@@ -125,7 +125,7 @@ namespace FitnessDiary.Tests
         }
 
         [TestCase("monday", 1, PlaceholderName1)]
-        [TestCase("monday", 2, PlaceholderName1)]
+        
 
         public void InsertExerciseSomewhereInTheProgramShouldWorkCorrectly(string weekDay, int position, string exerciseName)
         {
@@ -195,7 +195,7 @@ namespace FitnessDiary.Tests
         public void ShouldNotRemoveExerciseFromPositionInTheProgramIfThePositionIsInvalid(string weekDay, int position)
         {
             this.controller.CreateExercise(PlaceholderName2, Sets, MinReps, MaxReps);
-            this.controller.AddExerciseToTheEndOfTheProgram("monday", PlaceholderName2);
+            this.controller.AddExerciseToTheEndOfTheProgram(weekDay, PlaceholderName2);
 
             Assert.Throws<ArgumentException>(() => this.controller.RemoveExerciseFromPositionInTheProgram(weekDay, position));
         }

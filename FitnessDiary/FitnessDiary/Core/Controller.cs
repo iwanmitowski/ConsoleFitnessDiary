@@ -19,7 +19,9 @@ namespace FitnessDiary.Core
         private readonly IExerciseHistory exerciseHistory;
         private readonly IFitnessProgramFactory fitnessProgramFactory;
         private IFitnessProgram fitnessProgram;
-        public Controller(IExerciseFactory exerciseFactory, IExerciseHistory exerciseHistory, IFitnessProgramFactory fitnessProgramFactory)
+        public Controller(IExerciseFactory exerciseFactory,
+            IExerciseHistory exerciseHistory,
+            IFitnessProgramFactory fitnessProgramFactory)
         {
             this.exerciseFactory = exerciseFactory;
             this.exerciseHistory = exerciseHistory;

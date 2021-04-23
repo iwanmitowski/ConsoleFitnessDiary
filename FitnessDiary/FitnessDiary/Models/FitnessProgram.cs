@@ -45,14 +45,16 @@ namespace FitnessDiary.Models
 
         public void Remove(WeekDays day, int number)
         {
-            int numberToAdd = number - 1;
-            CheckNumber(numberToAdd);
-            CheckNumberIfItsBiggerThanTheListCapacity(day, number);
-
             if (this.exercises[day].Count == 0)
             {
                 throw new InvalidOperationException(ExceptionMessages.NoExercisesInTheProgram);
             }
+
+            int numberToAdd = number - 1;
+            CheckNumber(numberToAdd);
+            CheckNumberIfItsBiggerThanTheListCapacity(day, number);
+
+            
             this.exercises[day].RemoveAt(numberToAdd);
         }
 
@@ -78,7 +80,7 @@ namespace FitnessDiary.Models
             }
 
             Table.ShowTheBeginningOfTheTable();
-
+            Console.WriteLine(Table.ReturnTheReadyTable());
         }
 
         public void ShowWeekly()
@@ -159,6 +161,8 @@ namespace FitnessDiary.Models
                 Table.PrintLine();
 
             }
+
+            Console.WriteLine(Table.ReturnTheReadyTable());
 
             Table.ShowTheBeginningOfTheTable();
 

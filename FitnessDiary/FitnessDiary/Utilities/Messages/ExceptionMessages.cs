@@ -11,6 +11,7 @@ namespace FitnessDiary.Utilities.Messages
         public const string InvalidName = "The name cannot be null, white space or over {0} symbols!";
         public const string InvalidSeries = "Series cannot be less or equal to zero!";
         public const string InvalidRepetitions = "Repetitions cannot be less or equal to zero!";
+        public const string InvalidMaxRepsCantBeLessThanMinReps = "Maximum Repetitions cannot be less than minimum repetitions!";
         public const string InvalidMaxLiftedWeightZeroOrLess = "Max lifted weight cannot be less or equal to zero!";
         public const string InvalidMaxLiftedWeightLessThanCurrent= "Max lifted weight cannot be less or equal to zero!";
         public const string InvalidNumber = "The number cannot be less or equal to zero!";

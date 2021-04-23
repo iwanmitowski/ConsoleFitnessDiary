@@ -1,5 +1,6 @@
 ﻿using FitnessDiary.Core;
 using FitnessDiary.Core.Factory;
+using FitnessDiary.IO;
 using FitnessDiary.Models;
 using FitnessDiary.Utilities.Enums;
 using System;
@@ -43,8 +44,13 @@ namespace FitnessDiary
             //var controller = new Controller(exerciseFactory, exerciseHistory);
 
 
-            //Engine engine = new Engine();
-            //engine.Run();
+            //var consoleReader = new ConsoleReader();
+            //var consoleWriter = new ConsoleWriter();
+
+            //var engine = new Engine(
+            //    controller,
+            //    consoleReader,
+            //    consoleWriter);
 
             ////////////////////////////////////////////////
 
@@ -102,8 +108,8 @@ namespace FitnessDiary
                 fb.Add(WeekDays.Sunday, ex1);
 
 
-                //fb.ShowWeekly();
-                fb.ShowDaily();
+                fb.ShowWeekly();
+                //fb.ShowDaily();
                 Table.ShowTheBeginningOfTheTable();
                 Console.ReadLine();
 

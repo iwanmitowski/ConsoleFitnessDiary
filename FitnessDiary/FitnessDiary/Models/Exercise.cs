@@ -14,7 +14,10 @@ namespace FitnessDiary.Models
         private int minimumRepetitions;
         private int maximumRepetitions;
         //max cant be less than min
-        public Exercise(string name, int sets, int minimumRepetitions, int maximumRepetitions)
+        public Exercise(string name, 
+            int sets,
+            int minimumRepetitions,
+            int maximumRepetitions)
         {
             Name = name;
             MaxLiftedWeight = 0;
@@ -54,7 +57,7 @@ namespace FitnessDiary.Models
                     {
                         throw new InvalidOperationException(ExceptionMessages.InvalidMaxLiftedWeightZeroOrLess);
                     }
-
+                    
                     throw new InvalidOperationException(ExceptionMessages.InvalidMaxLiftedWeightLessThanCurrent);
                 }
 
@@ -105,6 +108,10 @@ namespace FitnessDiary.Models
                 if (value <= 0)
                 {
                     throw new ArgumentException(ExceptionMessages.InvalidRepetitions);
+                }
+                else if (value < this.MinimumRepetitions)
+                {
+                    throw new InvalidOperationException(ExceptionMessages.InvalidMaxRepsCantBeLessThanMinReps);
                 }
                 this.maximumRepetitions = value;
             }
