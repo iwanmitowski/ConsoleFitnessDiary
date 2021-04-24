@@ -18,10 +18,10 @@ namespace FitnessDiary.Core.Contracts
 
     //Create fitness program (done) if the file is empty!!!!!!!!!
 
-    //AddExercise
-    //InsertExercise
-    //RemoveExercise
-    //Update
+    //AddExercise     (done) 
+    //InsertExercise     (done)
+    //RemoveExercise     (done)
+    //Update     (done)
 
     // The input number should be decreased with 1!!!!!     (done)
 
@@ -46,9 +46,9 @@ namespace FitnessDiary.Core.Contracts
         public string ChangeExerciseSomewhereInTheProgramWithAnother(string weekDay, int position, string exerciseName);
         public string RemoveExerciseFromPositionInTheProgram(string weekDay, int position);
 
-        //public string ShowDailyProgram();
-        //public string ShowWeeklyProgram();
-
+        public string ShowDailyProgram();
+        public string ShowWeeklyProgram();
+        void DisableMaximizingAndResizing();
 
 
         //To think about these more:

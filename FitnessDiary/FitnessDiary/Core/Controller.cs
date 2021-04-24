@@ -3,11 +3,13 @@ using FitnessDiary.Core.Factories.Contracts;
 using FitnessDiary.Core.Factory;
 using FitnessDiary.Core.Factory.Contracts;
 using FitnessDiary.Models.Contracts;
+using FitnessDiary.Models.TableUtilities.TableBuilders.Contracts;
 using FitnessDiary.Utilities.Enums;
 using FitnessDiary.Utilities.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,18 +17,52 @@ namespace FitnessDiary.Core
 {
     public class Controller : IController
     {
+        private const int mfByCommand = 0x00000000;
+        public const int scClose = 0xF060;
+        public const int scMaximize = 0xF030;
+        public const int scResize = 0xF000;
+
+        [DllImport("user32.dll")]
+        public static extern int DeleteMenu(IntPtr hMenu, int nPosition, int wFlags);
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
+
+        [DllImport("kernel32.dll", ExactSpelling = true)]
+        private static extern IntPtr GetConsoleWindow();
+
+
         private readonly IExerciseFactory exerciseFactory;
         private readonly IExerciseHistory exerciseHistory;
         private readonly IFitnessProgramFactory fitnessProgramFactory;
+        private ITableBuilderFactory tableBuilderFactory;
+        private ITableBuilder dailyTableBuilder;
+        private ITableBuilder weeklyTableBuilder;
+
         private IFitnessProgram fitnessProgram;
         public Controller(IExerciseFactory exerciseFactory,
             IExerciseHistory exerciseHistory,
-            IFitnessProgramFactory fitnessProgramFactory)
+            IFitnessProgramFactory fitnessProgramFactory,
+            ITableBuilderFactory tableBuilderFactory)
         {
             this.exerciseFactory = exerciseFactory;
             this.exerciseHistory = exerciseHistory;
             this.fitnessProgramFactory = fitnessProgramFactory;
+            this.tableBuilderFactory = tableBuilderFactory;
         }
+
+        public void DisableMaximizingAndResizing()
+        {
+            IntPtr handle = GetConsoleWindow();
+            IntPtr sysMenu = GetSystemMenu(handle, false);
+
+            if (handle != IntPtr.Zero)
+            {
+                DeleteMenu(sysMenu, scMaximize, mfByCommand);
+                DeleteMenu(sysMenu, scResize, mfByCommand);
+            }
+        }
+
         public string CreateFitnessProgram()
         {
             this.fitnessProgram = fitnessProgramFactory.CreateFitnessProgram();
@@ -204,6 +240,20 @@ namespace FitnessDiary.Core
         private string MakeTheFirstLetterToUpper(string word)
         {
             return word.First().ToString().ToUpper() + word.Substring(1);
+        }
+
+        public string ShowDailyProgram()
+        {
+            this.dailyTableBuilder = tableBuilderFactory.CreateTableBuilder("Daily", this.fitnessProgram.Exercises);
+
+            return this.dailyTableBuilder.BuildTable();
+        }
+
+        public string ShowWeeklyProgram()
+        {
+            this.weeklyTableBuilder = tableBuilderFactory.CreateTableBuilder("Weekly", this.fitnessProgram.Exercises);
+
+            return this.weeklyTableBuilder.BuildTable();
         }
     }
 }

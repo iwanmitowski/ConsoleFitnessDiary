@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FitnessDiary.Core;
+using FitnessDiary.Core.Factories;
 using FitnessDiary.Core.Factories.Contracts;
 using FitnessDiary.Core.Factory;
 using FitnessDiary.Models;
 using FitnessDiary.Models.Contracts;
+using FitnessDiary.Models.TableUtilities;
 using FitnessDiary.Utilities.Messages;
 using NUnit.Framework;
 namespace FitnessDiary.Tests
@@ -29,6 +31,8 @@ namespace FitnessDiary.Tests
         ExerciseFactory exerciseFactory;
         ExerciseHistory exerciseHistory;
 
+        TableBuilderFactory tableBuilderFactory;
+
         Exercise exercise1;
         Exercise exercise2;
 
@@ -39,10 +43,10 @@ namespace FitnessDiary.Tests
             this.exerciseHistory = new ExerciseHistory();
             this.fitnessProgramFactory = new FitnessProgramFactory();
             this.fitnessProgram = new FitnessProgram();
-
+            
             exercise1 = new Exercise(PlaceholderName1, Sets, MinReps, MaxReps);
             exercise2 = new Exercise(PlaceholderName2, Sets, MinReps, MaxReps);
-            controller = new Controller(exerciseFactory, exerciseHistory, fitnessProgramFactory);
+            controller = new Controller(exerciseFactory, exerciseHistory, fitnessProgramFactory,tableBuilderFactory);
 
             this.controller.CreateExercise(PlaceholderName1, Sets, MinReps, MaxReps);
             this.controller.CreateFitnessProgram();
