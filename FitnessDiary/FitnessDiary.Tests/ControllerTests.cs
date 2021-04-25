@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using FitnessDiary.Core;
 using FitnessDiary.Core.Factories;
 using FitnessDiary.Core.Factories.Contracts;
 using FitnessDiary.Core.Factory;
+using FitnessDiary.IO.FileIO;
 using FitnessDiary.Models;
-using FitnessDiary.Models.Contracts;
-using FitnessDiary.Models.TableUtilities;
 using FitnessDiary.Utilities.Messages;
 using NUnit.Framework;
+
 namespace FitnessDiary.Tests
 {
     public class ControllerTests
@@ -36,6 +33,9 @@ namespace FitnessDiary.Tests
         Exercise exercise1;
         Exercise exercise2;
 
+        FitnessProgramIO fitnessProgramIO;
+        ExerciseIO exerciseIO;
+
         [SetUp]
         public void SetUp()
         {
@@ -43,10 +43,12 @@ namespace FitnessDiary.Tests
             this.exerciseHistory = new ExerciseHistory();
             this.fitnessProgramFactory = new FitnessProgramFactory();
             this.fitnessProgram = new FitnessProgram();
-            
+            this.fitnessProgramIO= new FitnessProgramIO(Path.Combine("..", "..", "..", "DataBase", "FitnessProgram.txt"));
+            this.exerciseIO = new ExerciseIO(Path.Combine("..", "..", "..", "DataBase", "CreatedExercises.txt"));
+
             exercise1 = new Exercise(PlaceholderName1, Sets, MinReps, MaxReps);
             exercise2 = new Exercise(PlaceholderName2, Sets, MinReps, MaxReps);
-            controller = new Controller(exerciseFactory, exerciseHistory, fitnessProgramFactory,tableBuilderFactory);
+            controller = new Controller(exerciseFactory, exerciseHistory, fitnessProgramFactory,tableBuilderFactory,fitnessProgramIO,exerciseIO);
 
             this.controller.CreateExercise(PlaceholderName1, Sets, MinReps, MaxReps);
             this.controller.CreateFitnessProgram();

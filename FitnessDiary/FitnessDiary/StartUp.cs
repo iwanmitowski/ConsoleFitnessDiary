@@ -3,11 +3,9 @@ using FitnessDiary.Core.Factories;
 using FitnessDiary.Core.Factories.Contracts;
 using FitnessDiary.Core.Factory;
 using FitnessDiary.IO;
+using FitnessDiary.IO.FileIO;
 using FitnessDiary.Models;
-using FitnessDiary.Utilities.Enums;
-using System;
-using System.Linq;
-using System.Runtime.InteropServices;
+using System.IO;
 
 namespace FitnessDiary
 {
@@ -20,10 +18,15 @@ namespace FitnessDiary
             var fitnessProgramFactory = new FitnessProgramFactory();
             var tableBuilderFactory = new TableBuilderFactory();
 
+            var fitnessProgramIO = new FitnessProgramIO(Path.Combine("..", "..", "..", "DataBase", "FitnessProgram.txt"));
+            var exerciseIO = new ExerciseIO(Path.Combine("..", "..", "..", "DataBase", "CreatedExercises.txt"));
+
             var controller = new Controller(exerciseFactory,
                 exerciseHistory,
                 fitnessProgramFactory,
-                tableBuilderFactory);
+                tableBuilderFactory,
+                fitnessProgramIO,
+                exerciseIO);
 
 
             var consoleReader = new ConsoleReader();

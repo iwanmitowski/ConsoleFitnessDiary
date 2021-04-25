@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FitnessDiary.Models;
 using NUnit.Framework;
 using FitnessDiary.Utilities.Enums;
 
 namespace FitnessDiary.Tests
 {
-   public class FitnessProgramTests
+    public class FitnessProgramTests
     {
         Exercise exercise1;
         Exercise exercise2;

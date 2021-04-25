@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FitnessDiary.Core.Contracts
+﻿namespace FitnessDiary.Core.Contracts
 {
     //BONUS: Registering name on first opening and showing Welcome, back {name}?
 
@@ -25,31 +19,45 @@ namespace FitnessDiary.Core.Contracts
 
     // The input number should be decreased with 1!!!!!     (done)
 
-    //ShowDaily if registered
-    //ShowWeekly if chosen option
+    //ShowDaily if registered      (50% done)
+    //ShowWeekly if chosen option      (done)
 
-    //Writting the program in file.
-    //Writting all the exercises registered
+    //Writting the program in file.     (done)
+    //Writting all the exercises registered     (done)
+
+
+
+
+    //Reading and creating
 
     //Understandable UI
 
-    //Move the maximizing restriction in Method ?
+    //Console colors and font change
+
     public interface IController
     {
-        public string CreateExercise(string name, int sets, int minimumRepetitions, int maximumRepetitions);
-        public string SetMaxLiftedWeightToExercise(string name, double liftedWeight);
-        public string UpdateExerciseSets(string name, int sets);
-        public string UpdateExerciseReps(string name, int minReps, int maxReps);
-        public string CreateFitnessProgram();
-        public string AddExerciseToTheEndOfTheProgram(string weekDay, string exerciseName);
-        public string InsertExerciseSomewhereInTheProgram(string weekDay, int position, string exerciseName);
-        public string ChangeExerciseSomewhereInTheProgramWithAnother(string weekDay, int position, string exerciseName);
-        public string RemoveExerciseFromPositionInTheProgram(string weekDay, int position);
+       string CreateExercise(string name, int sets, int minimumRepetitions, int maximumRepetitions);
+       string SetMaxLiftedWeightToExercise(string name, double liftedWeight);
+       string UpdateExerciseSets(string name, int sets);
+       string UpdateExerciseReps(string name, int minReps, int maxReps);
+       string CreateFitnessProgram();
+       string AddExerciseToTheEndOfTheProgram(string weekDay, string exerciseName);
+       string InsertExerciseSomewhereInTheProgram(string weekDay, int position, string exerciseName);
+       string ChangeExerciseSomewhereInTheProgramWithAnother(string weekDay, int position, string exerciseName);
+       string RemoveExerciseFromPositionInTheProgram(string weekDay, int position);
 
-        public string ShowDailyProgram();
-        public string ShowWeeklyProgram();
+        string ShowDailyProgram();
+        string ShowWeeklyProgram();
         void DisableMaximizingAndResizing();
+        //IO
+        void SetCollectionToFitnesProgramIO();
+        void WriteTheFitnessProgramInFile();
 
+        void SetCollectionToExerciseIO();
+        void WriteAllExercisesFromTheExerciseHistoryInFile();
+
+        void ExerciseFiller();
+        void ProgramFiller();
 
         //To think about these more:
         //void WriteDailyProgramInFile();

@@ -1,0 +1,7 @@
+Monday,Single Leg Deadlift,bicarki,Single Leg Deadlift,Single Leg Deadlift,bicarki,Single Leg Deadlift,Single Leg Deadlift,Bench ,Single Leg Deadlift,Single Leg Deadlift
+Tuesday,Single Leg Deadlift
+Wednesday,Single Leg Deadlift,Single Leg Deadlift
+Thursday,Single Leg Deadlift
+Friday,Single Leg Deadlift,Single Leg Deadlift,Single Leg Deadlift
+Saturday,bicarki
+Sunday,Single Leg Deadlift,Single Leg Deadlift,Single Leg Deadlift,Single Leg Deadlift

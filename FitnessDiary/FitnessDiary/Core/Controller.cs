@@ -1,17 +1,15 @@
 ﻿using FitnessDiary.Core.Contracts;
 using FitnessDiary.Core.Factories.Contracts;
-using FitnessDiary.Core.Factory;
 using FitnessDiary.Core.Factory.Contracts;
+using FitnessDiary.IO.FileIO.Contracts;
 using FitnessDiary.Models.Contracts;
 using FitnessDiary.Models.TableUtilities.TableBuilders.Contracts;
 using FitnessDiary.Utilities.Enums;
 using FitnessDiary.Utilities.Messages;
+using FitnessDiary.Utilities.Parsers;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FitnessDiary.Core
 {
@@ -39,16 +37,23 @@ namespace FitnessDiary.Core
         private ITableBuilder dailyTableBuilder;
         private ITableBuilder weeklyTableBuilder;
 
+        IFileIO fitnessProgramIO;
+        IFileIO exerciseIO;
+
         private IFitnessProgram fitnessProgram;
         public Controller(IExerciseFactory exerciseFactory,
             IExerciseHistory exerciseHistory,
             IFitnessProgramFactory fitnessProgramFactory,
-            ITableBuilderFactory tableBuilderFactory)
+            ITableBuilderFactory tableBuilderFactory,
+            IFileIO fitnessProgramIO,
+            IFileIO exerciseIO)
         {
             this.exerciseFactory = exerciseFactory;
             this.exerciseHistory = exerciseHistory;
             this.fitnessProgramFactory = fitnessProgramFactory;
             this.tableBuilderFactory = tableBuilderFactory;
+            this.fitnessProgramIO = fitnessProgramIO;
+            this.exerciseIO = exerciseIO;
         }
 
         public void DisableMaximizingAndResizing()
@@ -141,7 +146,7 @@ namespace FitnessDiary.Core
 
         public string AddExerciseToTheEndOfTheProgram(string weekDay, string exerciseName)
         {
-            WeekDays currentDay = WeekDaysParser(weekDay);
+            WeekDays currentDay = WeekDaysParser.Parse(weekDay);
 
             var exercise = this.exerciseHistory.GetByName(exerciseName);
 
@@ -158,7 +163,7 @@ namespace FitnessDiary.Core
 
         public string InsertExerciseSomewhereInTheProgram(string weekDay, int position, string exerciseName)
         {
-            WeekDays currentDay = WeekDaysParser(weekDay);
+            WeekDays currentDay = WeekDaysParser.Parse(weekDay);
 
             var exercise = this.exerciseHistory.GetByName(exerciseName);
 
@@ -176,7 +181,7 @@ namespace FitnessDiary.Core
 
         public string ChangeExerciseSomewhereInTheProgramWithAnother(string weekDay, int position, string exerciseName)
         {
-            WeekDays currentDay = WeekDaysParser(weekDay);
+            WeekDays currentDay = WeekDaysParser.Parse(weekDay);
 
             var exercise = this.exerciseHistory.GetByName(exerciseName);
 
@@ -194,7 +199,8 @@ namespace FitnessDiary.Core
 
         public string RemoveExerciseFromPositionInTheProgram(string weekDay, int position)
         {
-            WeekDays currentDay = WeekDaysParser(weekDay);
+            WeekDays currentDay = WeekDaysParser.Parse(weekDay);
+
             this.fitnessProgram.Remove(currentDay, position);
 
             return string.Format(
@@ -202,6 +208,104 @@ namespace FitnessDiary.Core
                 weekDay,
                 position);
         }
+        public string ShowDailyProgram()
+        {
+            this.dailyTableBuilder = tableBuilderFactory.
+                CreateTableBuilder(
+                "Daily",
+                this.fitnessProgram.Exercises);
+
+            return this.dailyTableBuilder.BuildTable();
+        }
+
+        public string ShowWeeklyProgram()
+        {
+            this.weeklyTableBuilder = tableBuilderFactory.
+                CreateTableBuilder(
+                "Weekly",
+                this.fitnessProgram.Exercises);
+
+            return this.weeklyTableBuilder.BuildTable();
+        }
+        //IO playground
+
+
+        // To be moved in separate class and these methods should be private and be executed in the beginning.
+        // Option to write exercise in the file while creating it
+
+        //Fitness Program IO
+        public void SetCollectionToFitnesProgramIO()
+        {
+            this.fitnessProgramIO.SetCollection(this.fitnessProgram.Exercises);
+        }
+
+        public void WriteTheFitnessProgramInFile()
+        {
+            this.fitnessProgramIO.WriteAllText();
+        }
+
+        //Exercises IO
+        public void SetCollectionToExerciseIO()
+        {
+            this.exerciseIO.SetCollection(this.exerciseHistory.GetAll());
+        }
+        public void WriteAllExercisesFromTheExerciseHistoryInFile()
+        {
+            this.exerciseIO.WriteAllText();
+        }
+
+        public void ExerciseFiller()
+        {
+            string[] input = this.exerciseIO.ReadAllLines();
+
+            foreach (var line in input)
+            {
+                string[] exerciseArguments = line.
+                    Split(",", StringSplitOptions.RemoveEmptyEntries).
+                    ToArray();
+
+                string name = exerciseArguments[0];
+                int sets = int.Parse(exerciseArguments[1]);
+                int minReps = int.Parse(exerciseArguments[2]);
+                int maxReps = int.Parse(exerciseArguments[3]);
+                double maxLifted = double.Parse(exerciseArguments[3]);
+
+                this.CreateExercise(name, sets, minReps, maxReps);
+                if (maxLifted != 0) this.SetMaxLiftedWeightToExercise(name, maxLifted);
+
+            }
+        }
+
+        public void ProgramFiller()
+        {
+            string[] input = this.fitnessProgramIO.ReadAllLines();
+
+            foreach (var line in input)
+            {
+                string[] exerciseArguments = line.
+                    Split(",", StringSplitOptions.RemoveEmptyEntries).
+                    ToArray();
+
+                string weekDay = exerciseArguments[0];
+
+                foreach (var exerciseName in exerciseArguments.Skip(1))
+                {
+                    this.AddExerciseToTheEndOfTheProgram(weekDay, exerciseName);
+                }
+            }
+
+        }
+
+
+
+
+
+
+
+
+
+
+
 
 
         //Helpers
@@ -216,44 +320,10 @@ namespace FitnessDiary.Core
             }
         }
 
-        private WeekDays WeekDaysParser(string weekDay)
-        {
-            switch (weekDay.ToLower())
-            {
-                case "monday":
-                case "tuesday":
-                case "wednesday":
-                case "thursday":
-                case "friday":
-                case "saturday":
-                case "sunday":
-                    return (WeekDays)Enum.Parse(typeof(WeekDays), MakeTheFirstLetterToUpper(weekDay.ToLower()));
 
-                default:
 
-                    throw new InvalidOperationException(string.Format(
-                        ExceptionMessages.InvalidWeekDay,
-                        weekDay));
-            }
-        }
 
-        private string MakeTheFirstLetterToUpper(string word)
-        {
-            return word.First().ToString().ToUpper() + word.Substring(1);
-        }
 
-        public string ShowDailyProgram()
-        {
-            this.dailyTableBuilder = tableBuilderFactory.CreateTableBuilder("Daily", this.fitnessProgram.Exercises);
 
-            return this.dailyTableBuilder.BuildTable();
-        }
-
-        public string ShowWeeklyProgram()
-        {
-            this.weeklyTableBuilder = tableBuilderFactory.CreateTableBuilder("Weekly", this.fitnessProgram.Exercises);
-
-            return this.weeklyTableBuilder.BuildTable();
-        }
     }
 }

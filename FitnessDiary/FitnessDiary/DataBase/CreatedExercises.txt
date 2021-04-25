@@ -1,0 +1,3 @@
+Single Leg Deadlift,20,20,20,10
+Bench ,20,20,20,0
+bicarki,20,20,20,0

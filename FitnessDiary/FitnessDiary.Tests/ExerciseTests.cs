@@ -1,6 +1,5 @@
 ﻿using FitnessDiary.Models;
 using NUnit.Framework;
-using System;
 
 namespace FitnessDiary.Tests
 {

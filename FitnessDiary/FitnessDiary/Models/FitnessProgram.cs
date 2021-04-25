@@ -1,10 +1,8 @@
 ﻿using FitnessDiary.Models.Contracts;
-using FitnessDiary.Models.TableUtilities;
 using FitnessDiary.Utilities.Enums;
 using FitnessDiary.Utilities.Messages;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace FitnessDiary.Models
 {
