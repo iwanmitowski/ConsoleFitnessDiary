@@ -15,12 +15,13 @@ namespace FitnessDiary.IO.FileIO
         public abstract void SetCollection<T>(T collection);
 
         public abstract string GetText();
-        //write
-        public void AppendAllText()
-        {
-            File.AppendAllText(Path, GetText());
 
+        //write
+        public void AppendAllText(string text)
+        {
+            File.AppendAllText(Path, text);
         }
+        
 
         public void WriteAllText()
         {

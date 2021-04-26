@@ -8,6 +8,7 @@ using FitnessDiary.Utilities.Enums;
 using FitnessDiary.Utilities.Messages;
 using FitnessDiary.Utilities.Parsers;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 
@@ -56,6 +57,7 @@ namespace FitnessDiary.Core
             this.exerciseIO = exerciseIO;
         }
 
+        //SetUp Methods
         public void DisableMaximizingAndResizing()
         {
             IntPtr handle = GetConsoleWindow();
@@ -66,6 +68,12 @@ namespace FitnessDiary.Core
                 DeleteMenu(sysMenu, scMaximize, mfByCommand);
                 DeleteMenu(sysMenu, scResize, mfByCommand);
             }
+        }
+
+        public void ChangeAppearence()
+        {
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
         }
 
         public string CreateFitnessProgram()
@@ -224,14 +232,10 @@ namespace FitnessDiary.Core
                 CreateTableBuilder(
                 "Weekly",
                 this.fitnessProgram.Exercises);
-
+            
             return this.weeklyTableBuilder.BuildTable();
         }
-        //IO playground
-
-
-        // To be moved in separate class and these methods should be private and be executed in the beginning.
-        // Option to write exercise in the file while creating it
+       
 
         //Fitness Program IO
         public void SetCollectionToFitnesProgramIO()
@@ -244,6 +248,7 @@ namespace FitnessDiary.Core
             this.fitnessProgramIO.WriteAllText();
         }
 
+
         //Exercises IO
         public void SetCollectionToExerciseIO()
         {
@@ -253,7 +258,8 @@ namespace FitnessDiary.Core
         {
             this.exerciseIO.WriteAllText();
         }
-
+        
+        //Fillers
         public void ExerciseFiller()
         {
             string[] input = this.exerciseIO.ReadAllLines();
@@ -269,6 +275,11 @@ namespace FitnessDiary.Core
                 int minReps = int.Parse(exerciseArguments[2]);
                 int maxReps = int.Parse(exerciseArguments[3]);
                 double maxLifted = double.Parse(exerciseArguments[3]);
+
+                if (this.exerciseHistory.GetAll().Any(x=>x.Name==name))
+                {  
+                    continue;
+                }
 
                 this.CreateExercise(name, sets, minReps, maxReps);
                 if (maxLifted != 0) this.SetMaxLiftedWeightToExercise(name, maxLifted);

@@ -1,7 +1,7 @@
-Monday,Single Leg Deadlift,bicarki,Single Leg Deadlift,Single Leg Deadlift,bicarki,Single Leg Deadlift,Single Leg Deadlift,Bench ,Single Leg Deadlift,Single Leg Deadlift
-Tuesday,Single Leg Deadlift
-Wednesday,Single Leg Deadlift,Single Leg Deadlift
-Thursday,Single Leg Deadlift
-Friday,Single Leg Deadlift,Single Leg Deadlift,Single Leg Deadlift
-Saturday,bicarki
-Sunday,Single Leg Deadlift,Single Leg Deadlift,Single Leg Deadlift,Single Leg Deadlift
+Monday,alo sashko,alo sashko,alo sashko,alo sashko
+Tuesday,alo sashko,alo sashko,alo sashko,alo sashko
+Wednesday,alo sashko,alo sashko,alo sashko,alo sashko
+Thursday,alo sashko,alo sashko,alo sashko,alo sashko
+Friday,alo sashko,alo sashko,alo sashko,alo sashko
+Saturday,alo sashko,alo sashko,alo sashko,alo sashko
+Sunday,alo sashko,alo sashko,alo sashko,alo sashko

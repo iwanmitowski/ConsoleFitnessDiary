@@ -9,6 +9,7 @@ namespace FitnessDiary.IO.FileIO
         public ExerciseIO(string path) : base(path)
         {
         }
+        
 
         override public string GetText()
         {

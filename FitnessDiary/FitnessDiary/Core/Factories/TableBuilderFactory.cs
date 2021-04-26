@@ -1,13 +1,10 @@
 ﻿using FitnessDiary.Core.Factories.Contracts;
-using FitnessDiary.Models.TableUtilities;
 using FitnessDiary.Models.TableUtilities.TableBuilders.Contracts;
 using FitnessDiary.Utilities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FitnessDiary.Core.Factories
 {

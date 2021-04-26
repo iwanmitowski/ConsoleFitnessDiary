@@ -3,6 +3,6 @@
     public interface IFileWriter
     {
         void WriteAllText();
-        void AppendAllText();
+        void AppendAllText(string exercise);
     }
 }

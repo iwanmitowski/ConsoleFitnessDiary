@@ -1,4 +1,5 @@
 ﻿using FitnessDiary.Utilities.Enums;
+using FitnessDiary.Utilities.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ namespace FitnessDiary.Models.TableUtilities
 {
     public class WeeklyTableBuilder : TableBuilder
     {
+        private bool isRestDay;
         public WeeklyTableBuilder(Dictionary<WeekDays, List<IExercise>> exercises) : base(exercises)
         {
         }
@@ -17,12 +19,16 @@ namespace FitnessDiary.Models.TableUtilities
             int biggestExerciseCountAmongAllDays = GetBiggestExerciseCount();
             int rowCounter = 1;
 
+            if (isRestDay)
+            {
+                return OutputMessages.AddExercisesToTheProgram;
+            }
+
             Table.SetWindowSize();
-            //Console.Clear();
+            
             Table.SetTableWidth(longestExerciseName * 8 + 9);
-            Table.PrintLine();
+            Table.PrintTop();
             Table.PrintRow("Number", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
-            Table.PrintLine();
 
             string exerciseMonToString = string.Empty;
             string exerciseTueToString = string.Empty;
@@ -42,6 +48,8 @@ namespace FitnessDiary.Models.TableUtilities
 
             for (int i = 0; i < biggestExerciseCountAmongAllDays; i++)
             {
+                Table.PrintLine();
+
                 bool isValidMon = IsItValidDay(WeekDays.Monday, i);
                 bool isValidTue = IsItValidDay(WeekDays.Tuesday, i);
                 bool isValidWed = IsItValidDay(WeekDays.Wednesday, i);
@@ -86,10 +94,9 @@ namespace FitnessDiary.Models.TableUtilities
                     exerciseSunFormating
                     );
 
-                Table.PrintLine();
 
             }
-
+            Table.PrintBot();
             Table.ShowTheBeginningOfTheTable();
             return Table.ReturnTheReadyTable();
         }
@@ -98,9 +105,19 @@ namespace FitnessDiary.Models.TableUtilities
         {
             int minLength = 20;
             int longest = 0;
-
+            int restDayCounter = 0;
             foreach ((WeekDays day, List<IExercise> ex) in this.exercises)
             {
+                if (ex.Count == 0)
+                {
+                    restDayCounter++;
+                    if (restDayCounter==7)
+                    {
+                        isRestDay = true;
+                    }
+                    continue;
+                }
+
                 int current = exercises[day].OrderByDescending(x => x.Name.Length).First().Name.Length;
 
                 if (current > longest)

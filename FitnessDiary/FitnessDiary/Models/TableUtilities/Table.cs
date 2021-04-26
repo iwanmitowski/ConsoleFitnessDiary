@@ -33,17 +33,27 @@ namespace FitnessDiary.Models
         }
         public static void PrintLine()
         {
-            sb.AppendLine(new string('-', TableWidth));
+            string line = '├' + new string('─', TableWidth - 2) + '┤';
+            sb.AppendLine(line);
         }
-
+        public static void PrintTop()
+        {
+            string top = '┌' + new string('─', TableWidth - 2) + '┐';
+            sb.AppendLine(top);
+        }
+        public static void PrintBot()
+        {
+            string bot = '└' + new string('─', TableWidth - 2) + '┘';
+            sb.AppendLine(bot);
+        }
         public static void PrintRow(params string[] columns)
         {
             int width = (TableWidth - columns.Length) / columns.Length;
-            string row = "|";
+            string row = "│";
 
             foreach (string column in columns)
             {
-                row += AignCenter(column, width) + "|";
+                row += AignCenter(column, width) + "│";
             }
 
             sb.AppendLine(row);

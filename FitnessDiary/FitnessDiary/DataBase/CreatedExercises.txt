@@ -1,3 +1,4 @@
-Single Leg Deadlift,20,20,20,10
-Bench ,20,20,20,0
-bicarki,20,20,20,0
+Single Leg Deadlift,20,20,20,20
+Bench ,20,20,20,20
+bicarki,20,20,20,20
+alo sashko,60,20,20,360
