@@ -35,6 +35,7 @@ namespace FitnessDiary.Tests
 
         FitnessProgramIO fitnessProgramIO;
         ExerciseIO exerciseIO;
+        UserFileIO userFileIO;
 
         [SetUp]
         public void SetUp()
@@ -43,12 +44,19 @@ namespace FitnessDiary.Tests
             this.exerciseHistory = new ExerciseHistory();
             this.fitnessProgramFactory = new FitnessProgramFactory();
             this.fitnessProgram = new FitnessProgram();
-            this.fitnessProgramIO= new FitnessProgramIO(Path.Combine("..", "..", "..", "DataBase", "FitnessProgram.txt"));
+            this.fitnessProgramIO = new FitnessProgramIO(Path.Combine("..", "..", "..", "DataBase", "FitnessProgram.txt"));
             this.exerciseIO = new ExerciseIO(Path.Combine("..", "..", "..", "DataBase", "CreatedExercises.txt"));
+            this.userFileIO = new UserFileIO(Path.Combine("..", "..", "..", "DataBase", "User.txt"));
 
             exercise1 = new Exercise(PlaceholderName1, Sets, MinReps, MaxReps);
             exercise2 = new Exercise(PlaceholderName2, Sets, MinReps, MaxReps);
-            controller = new Controller(exerciseFactory, exerciseHistory, fitnessProgramFactory,tableBuilderFactory,fitnessProgramIO,exerciseIO);
+            controller = new Controller(exerciseFactory,
+                exerciseHistory,
+                fitnessProgramFactory,
+                tableBuilderFactory,
+                fitnessProgramIO,
+                exerciseIO,
+                userFileIO);
 
             this.controller.CreateExercise(PlaceholderName1, Sets, MinReps, MaxReps);
             this.controller.CreateFitnessProgram();
@@ -131,7 +139,7 @@ namespace FitnessDiary.Tests
         }
 
         [TestCase("monday", 1, PlaceholderName1)]
-        
+
 
         public void InsertExerciseSomewhereInTheProgramShouldWorkCorrectly(string weekDay, int position, string exerciseName)
         {

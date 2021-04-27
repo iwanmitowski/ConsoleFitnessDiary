@@ -10,25 +10,33 @@ namespace FitnessDiary.IO.FileIO
         {
             this.Path = path;
         }
-        public string Path { get; private set; }
+        public string Path
+        {
+            get
+            {
+                return this.path;
+            }
+            private set
+            {
+                this.path = value;
+            }
+            
+        }
 
         public abstract void SetCollection<T>(T collection);
 
         public abstract string GetText();
 
-        //write
         public void AppendAllText(string text)
         {
             File.AppendAllText(Path, text);
         }
-        
 
         public void WriteAllText()
         {
             File.WriteAllText(this.Path, GetText());
         }
 
-        //read
         public string[] ReadAllLines()
         {
             return File.ReadAllLines(this.Path);

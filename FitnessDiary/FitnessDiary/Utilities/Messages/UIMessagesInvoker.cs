@@ -19,11 +19,30 @@ namespace FitnessDiary.Utilities.Messages
                 OutputMessages.Welcome,
                 name);
         }
+        static public string SeeYouTomorrow(string name)
+        {
+            return string.Format(
+                OutputMessages.SeeYouTomorrow,
+                name);
+        }
+        static public string InvalidInput()
+        {
+            return OutputMessages.InvalidInput;
+        }
+
+        static public string OptionExercise()
+        {
+            return OutputMessages.ExerciseOptions;
+        }
+        static public string OptionFitnessProgram()
+        {
+            return OutputMessages.FitnessProgramOptions;
+        }
 
         static public string ExerciseOptions()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine(OutputMessages.ExerciseOptions);
+
             sb.AppendLine(OutputMessages.ExerciseOptionsA);
             sb.AppendLine(OutputMessages.ExerciseOptionsB);
             sb.AppendLine(OutputMessages.ExerciseOptionsC);
@@ -34,7 +53,7 @@ namespace FitnessDiary.Utilities.Messages
         static public string FitnessProgramOptions()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine(OutputMessages.FitnessProgramOptions);
+
             sb.AppendLine(OutputMessages.FitnessProgramOptionsA);
             sb.AppendLine(OutputMessages.FitnessProgramOptionsB);
             sb.AppendLine(OutputMessages.FitnessProgramOptionsC);
@@ -43,5 +62,11 @@ namespace FitnessDiary.Utilities.Messages
 
             return sb.ToString();
         }
+
+        static public string CreateYourFirstExercise()
+        {
+            return OutputMessages.CreateYourFirstExercise;
+
+        }
     }
-} 
+}

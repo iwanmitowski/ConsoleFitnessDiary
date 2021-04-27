@@ -8,7 +8,7 @@ namespace FitnessDiary.Models.TableUtilities
 {
     public class WeeklyTableBuilder : TableBuilder
     {
-        private bool isRestDay;
+        private bool isEmpty;
         public WeeklyTableBuilder(Dictionary<WeekDays, List<IExercise>> exercises) : base(exercises)
         {
         }
@@ -19,7 +19,7 @@ namespace FitnessDiary.Models.TableUtilities
             int biggestExerciseCountAmongAllDays = GetBiggestExerciseCount();
             int rowCounter = 1;
 
-            if (isRestDay)
+            if (isEmpty)
             {
                 return OutputMessages.AddExercisesToTheProgram;
             }
@@ -105,15 +105,14 @@ namespace FitnessDiary.Models.TableUtilities
         {
             int minLength = 20;
             int longest = 0;
-            int restDayCounter = 0;
+            
             foreach ((WeekDays day, List<IExercise> ex) in this.exercises)
             {
                 if (ex.Count == 0)
                 {
-                    restDayCounter++;
-                    if (restDayCounter==7)
+                    if (this.IsEmptyTable())
                     {
-                        isRestDay = true;
+                        isEmpty = true;
                     }
                     continue;
                 }

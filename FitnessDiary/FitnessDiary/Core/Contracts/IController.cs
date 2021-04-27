@@ -21,6 +21,10 @@
         void WriteAllExercisesFromTheExerciseHistoryInFile();
         void ExerciseFiller();
         void ProgramFiller();
+        string Register(string name);
+        bool CheckIfTheUserIsRegistered();
+        void SetUserName();
+        string GetName();
     }
 }
 

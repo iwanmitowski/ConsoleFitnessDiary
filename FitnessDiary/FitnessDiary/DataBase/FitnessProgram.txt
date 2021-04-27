@@ -1,7 +1,0 @@
-Monday,alo sashko,alo sashko,alo sashko,alo sashko
-Tuesday,alo sashko,alo sashko,alo sashko,alo sashko
-Wednesday,alo sashko,alo sashko,alo sashko,alo sashko
-Thursday,alo sashko,alo sashko,alo sashko,alo sashko
-Friday,alo sashko,alo sashko,alo sashko,alo sashko
-Saturday,alo sashko,alo sashko,alo sashko,alo sashko
-Sunday,alo sashko,alo sashko,alo sashko,alo sashko

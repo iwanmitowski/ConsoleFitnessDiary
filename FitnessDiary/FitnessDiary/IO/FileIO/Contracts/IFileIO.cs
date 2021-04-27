@@ -1,7 +1,6 @@
 ﻿namespace FitnessDiary.IO.FileIO.Contracts
 {
-    public interface IFileIO:IFileReader, IFileWriter, ICollectionSetter
+    public interface IFileIO:IFileReader, IFileWriter, ICollectionSetter,ITextGetter
     {
-        string GetText();
     }
 }

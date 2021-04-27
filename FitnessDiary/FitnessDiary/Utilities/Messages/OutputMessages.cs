@@ -11,10 +11,13 @@
         public const string ExerciseChangedAtGivenPosition = "At day {0} exercise at position {1} is successfully changed to {2}.";
         public const string ExerciseInsertedAtGivenPosition = "At day {0} exercise {1} is successfully inserted at {2} position.";
         public const string ExerciseAddedAtTheEnd = "At day {0} exercise {1} is successfully at the end of the program.";
+        public const string UserRegisteredSuccessfully = "{0}, you are registered successfully!";
         public const string TodayIsARestDay = "Today is a rest day!";
         public const string AddExercisesToTheProgram = "Add some exercises to the program!";
-        public const string PleaseRegister = "Please, register!";
+        public const string PleaseRegister = "Please, register by entering your name!";
+        public const string InvalidInput = "Invalid input! Please, try something else";
         public const string Welcome = "Welcome, {0}! What muscles shall we train today ?";
+        public const string SeeYouTomorrow = "See you tomorrow, {0}! BEASTMODE ON !!!";
         public const string ExerciseOptions = "1 - Exercise Options";
         public const string ExerciseOptionsA = "   A - Create exercise ";
         public const string ExerciseOptionsB = "   B - Set maximum lifted weight to specific exercise by it's name";
@@ -26,6 +29,7 @@
         public const string FitnessProgramOptionsC = "   C - Insert specific exercise in the program";
         public const string FitnessProgramOptionsD = "   D - Change exercise in the program";
         public const string FitnessProgramOptionsE = "   E - Remove exercise from position in the program";
+        public const string CreateYourFirstExercise = "It's time to create your first exercise!";
        
 
     }

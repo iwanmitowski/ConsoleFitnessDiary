@@ -28,6 +28,10 @@ namespace FitnessDiary.Models.TableUtilities
 
             if (this.exercises[today].Count == 0)
             {
+                if (IsEmptyTable())
+                {
+                    return OutputMessages.AddExercisesToTheProgram;
+                }
                 return OutputMessages.TodayIsARestDay;
             }
 

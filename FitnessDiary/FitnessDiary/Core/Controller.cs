@@ -40,14 +40,15 @@ namespace FitnessDiary.Core
 
         IFileIO fitnessProgramIO;
         IFileIO exerciseIO;
-
+        IUserFileIO userFileIO;
         private IFitnessProgram fitnessProgram;
         public Controller(IExerciseFactory exerciseFactory,
             IExerciseHistory exerciseHistory,
             IFitnessProgramFactory fitnessProgramFactory,
             ITableBuilderFactory tableBuilderFactory,
             IFileIO fitnessProgramIO,
-            IFileIO exerciseIO)
+            IFileIO exerciseIO,
+            IUserFileIO userFileIO)
         {
             this.exerciseFactory = exerciseFactory;
             this.exerciseHistory = exerciseHistory;
@@ -55,6 +56,7 @@ namespace FitnessDiary.Core
             this.tableBuilderFactory = tableBuilderFactory;
             this.fitnessProgramIO = fitnessProgramIO;
             this.exerciseIO = exerciseIO;
+            this.userFileIO = userFileIO;
         }
 
         //SetUp Methods
@@ -308,7 +310,28 @@ namespace FitnessDiary.Core
         }
 
 
+        //UserIO TO MOCK THEM
+        public string Register(string name)
+        {
+            this.userFileIO.Register(name);
 
+            return string.Format(
+               OutputMessages.UserRegisteredSuccessfully,
+               name);
+        }
+        public bool CheckIfTheUserIsRegistered()
+        {
+            return this.userFileIO.IsTheUserExisting();
+        }
+        public void SetUserName()//Only if registered
+        {
+            this.userFileIO.SetUser();
+        }
+
+        public string GetName()
+        {
+           return this.userFileIO.User;
+        }
 
 
 

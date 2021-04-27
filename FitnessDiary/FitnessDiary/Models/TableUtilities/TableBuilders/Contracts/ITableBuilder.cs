@@ -3,5 +3,6 @@
     public interface ITableBuilder
     {
         abstract string BuildTable();
+        bool IsEmptyTable();
     }
 }

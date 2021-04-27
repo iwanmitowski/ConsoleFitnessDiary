@@ -2,7 +2,7 @@
 {
     public static class ExceptionMessages
     {
-        public const string InvalidName = "The exercise name cannot be null, white space or over {0} symbols!";
+        public const string InvalidName = "The name cannot be null, white space or over {0} symbols!";
         public const string InvalidSeries = "Series cannot be less or equal to zero!";
         public const string InvalidRepetitions = "Repetitions cannot be less or equal to zero!";
         public const string InvalidMaxRepsCantBeLessThanMinReps = "Maximum Repetitions cannot be less than minimum repetitions!";
@@ -14,5 +14,7 @@
         public const string InvalidWeekDay = "{0} is not a valid week day!";
         public const string ExerciseExists = "Exercise {0} already exists!";
         public const string ExerciseNotFound = "Exercise {0} not found. Create it first!";
+        public const string UserNameNotSet = "There is not set username!";
+        
     }
 }
