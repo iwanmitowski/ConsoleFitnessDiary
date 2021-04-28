@@ -4,15 +4,18 @@
     {
         void DisableMaximizingAndResizing();
         void ChangeAppearence();
-        string CreateExercise(string name, int sets, int minimumRepetitions, int maximumRepetitions);
-        string SetMaxLiftedWeightToExercise(string name, double liftedWeight);
-        string UpdateExerciseSets(string name, int sets);
-        string UpdateExerciseReps(string name, int minReps, int maxReps);
+        void NormalTextColor();
+        void ExceptionTextColor();
+        void MenuTextColor();
+        string CreateExercise(string name, string sets, string minimumRepetitions, string maximumRepetitions);
+        string SetMaxLiftedWeightToExercise(string name, string liftedWeight);
+        string UpdateExerciseSets(string name, string sets);
+        string UpdateExerciseReps(string name, string minReps, string maxReps);
         string CreateFitnessProgram();
-        string AddExerciseToTheEndOfTheProgram(string weekDay, string exerciseName);
-        string InsertExerciseSomewhereInTheProgram(string weekDay, int position, string exerciseName);
-        string ChangeExerciseSomewhereInTheProgramWithAnother(string weekDay, int position, string exerciseName);
-        string RemoveExerciseFromPositionInTheProgram(string weekDay, int position);
+        string AddExerciseAtTheEndOfTheProgram(string weekDay, string exerciseName);
+        string InsertExerciseSomewhereInTheProgram(string weekDay, string position, string exerciseName);
+        string ChangeExerciseSomewhereInTheProgramWithAnother(string weekDay, string position, string exerciseName);
+        string RemoveExerciseFromPositionInTheProgram(string weekDay, string position);
         string ShowDailyProgram();
         string ShowWeeklyProgram();
         void SetCollectionToFitnesProgramIO();
@@ -25,6 +28,7 @@
         bool CheckIfTheUserIsRegistered();
         void SetUserName();
         string GetName();
+        void CheckTheNeededLength(int current, int expected);
     }
 }
 

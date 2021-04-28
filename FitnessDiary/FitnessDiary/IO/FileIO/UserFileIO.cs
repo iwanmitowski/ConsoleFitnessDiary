@@ -75,7 +75,5 @@ namespace FitnessDiary.IO.FileIO
             this.User = username;
             WriteAllText();
         }
-
-        
     }
 }

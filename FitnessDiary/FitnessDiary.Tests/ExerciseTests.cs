@@ -59,6 +59,5 @@ namespace FitnessDiary.Tests
             Assert.AreEqual(expectedMin, this.exercise.MinimumRepetitions);
             Assert.AreEqual(expectedMax, this.exercise.MaximumRepetitions);
         }
-
     }
 }

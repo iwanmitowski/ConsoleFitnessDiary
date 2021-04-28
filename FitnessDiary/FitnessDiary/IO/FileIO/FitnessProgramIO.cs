@@ -12,7 +12,6 @@ namespace FitnessDiary.IO.FileIO
         public FitnessProgramIO(string path) : base(path)
         {
         }
-
         override public string GetText()
         {
             StringBuilder sb = new StringBuilder();
@@ -29,8 +28,5 @@ namespace FitnessDiary.IO.FileIO
         {
             this.exercises = (IReadOnlyDictionary<WeekDays, List<IExercise>>)collection;
         }
-
-
-       
     }
 }

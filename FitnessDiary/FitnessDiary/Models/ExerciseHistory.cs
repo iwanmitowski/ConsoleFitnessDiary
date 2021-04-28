@@ -28,17 +28,6 @@ namespace FitnessDiary.Models
 
             return exercise;
         }
-
-        //TODO
-
-        public void UpdateFileWithExercises()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void FillExercisesFromFile()
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

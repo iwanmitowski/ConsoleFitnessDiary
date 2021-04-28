@@ -22,8 +22,6 @@ namespace FitnessDiary.Tests
             exercise1 = new Exercise(PlaceholderName1, Sets, MinReps, MaxReps);
             exercise2 = new Exercise(PlaceholderName2, Sets, MinReps, MaxReps);
             this.exerciseHistory = new ExerciseHistory();
-
-
         }
 
         [Test]
@@ -37,7 +35,7 @@ namespace FitnessDiary.Tests
             this.exerciseHistory.Add(exercise1);
             int expectedExCount = 1;
 
-            Assert.AreEqual(1, this.exerciseHistory.GetAll().Count());
+            Assert.AreEqual(expectedExCount, this.exerciseHistory.GetAll().Count());
         }
 
         [TestCase(PlaceholderName1)]

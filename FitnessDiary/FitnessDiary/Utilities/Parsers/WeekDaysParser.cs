@@ -18,6 +18,7 @@ namespace FitnessDiary.Utilities.Parsers
                 case "friday":
                 case "saturday":
                 case "sunday":
+
                     return (WeekDays)Enum.Parse(typeof(WeekDays), MakeTheFirstLetterToUpper(weekDay.ToLower()));
 
                 default:
@@ -26,8 +27,6 @@ namespace FitnessDiary.Utilities.Parsers
                         ExceptionMessages.InvalidWeekDay,
                         weekDay));
             }
-
-           
         }
         private static string MakeTheFirstLetterToUpper(string word)
         {

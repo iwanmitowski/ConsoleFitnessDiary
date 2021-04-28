@@ -58,6 +58,5 @@ namespace FitnessDiary.Models.TableUtilities
             }
             return Math.Max(minLength, this.exercises[(WeekDays)today].OrderByDescending(x => x.Name.Length).First().Name.Length);
         }
-
     }
 }

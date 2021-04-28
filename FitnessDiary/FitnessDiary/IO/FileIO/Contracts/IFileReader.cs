@@ -3,6 +3,5 @@
     public interface IFileReader
     {
         public string[] ReadAllLines();
-       
     }
 }

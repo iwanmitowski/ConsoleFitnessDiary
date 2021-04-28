@@ -9,8 +9,6 @@ namespace FitnessDiary.Models
 {
     public static class Table
     {
-        //https://pastebin.com/H5K7yx9K
-
         private static StringBuilder sb = new StringBuilder();
         private static int TableWidth = 200;
         public static string ReturnTheReadyTable()
@@ -18,6 +16,10 @@ namespace FitnessDiary.Models
 
             return sb.ToString().TrimEnd(); 
 
+        }
+        public static void ClearTableBuilder()
+        {
+            sb.Clear();
         }
         public static void SetTableWidth(int width)
         {

@@ -8,7 +8,6 @@ using FitnessDiary.Utilities.Enums;
 using FitnessDiary.Utilities.Messages;
 using FitnessDiary.Utilities.Parsers;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 
@@ -59,6 +58,7 @@ namespace FitnessDiary.Core
             this.userFileIO = userFileIO;
         }
 
+
         //SetUp Methods
         public void DisableMaximizingAndResizing()
         {
@@ -75,9 +75,21 @@ namespace FitnessDiary.Core
         public void ChangeAppearence()
         {
             Console.BackgroundColor = ConsoleColor.White;
-            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            NormalTextColor();
         }
+        public void ExceptionTextColor()
+        {
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+        }
+        public void NormalTextColor()
+        {
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
 
+        }public void MenuTextColor()
+        {
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+
+        }
         public string CreateFitnessProgram()
         {
             this.fitnessProgram = fitnessProgramFactory.CreateFitnessProgram();
@@ -85,8 +97,14 @@ namespace FitnessDiary.Core
             return OutputMessages.FitnessProgramCreated;
         }
 
-        public string CreateExercise(string name, int sets, int minimumRepetitions, int maximumRepetitions)
+
+        //Business logic
+        public string CreateExercise(string name, string setsAsString, string minimumRepetitionsAsString, string maximumRepetitionsAsString)
         {
+            int sets = NumberParser.TryParse<int>(setsAsString, int.TryParse);
+            int minimumRepetitions = NumberParser.TryParse<int>(minimumRepetitionsAsString, int.TryParse);
+            int maximumRepetitions = NumberParser.TryParse<int>(maximumRepetitionsAsString, int.TryParse);
+
             if (this.exerciseHistory.GetAll().Any(x => x.Name == name))
             {
                 throw new InvalidOperationException(
@@ -107,8 +125,10 @@ namespace FitnessDiary.Core
                 );
         }
 
-        public string SetMaxLiftedWeightToExercise(string name, double liftedWeight)
+        public string SetMaxLiftedWeightToExercise(string name, string liftedWeightAsString)
         {
+            double liftedWeight = NumberParser.TryParse<double>(liftedWeightAsString, double.TryParse);
+
             var exercise = this.exerciseHistory.GetByName(name);
 
             CheckIfTheExerciseIsNotPresent(exercise, name);
@@ -118,12 +138,13 @@ namespace FitnessDiary.Core
             return string.Format(
                 OutputMessages.LiftedWeightSet,
                 name,
-                liftedWeight
-                );
+                liftedWeight);
         }
 
-        public string UpdateExerciseSets(string name, int sets)
+        public string UpdateExerciseSets(string name, string setsAsString)
         {
+            int sets = NumberParser.TryParse<int>(setsAsString, int.TryParse);
+
             var exercise = this.exerciseHistory.GetByName(name);
 
             CheckIfTheExerciseIsNotPresent(exercise, name);
@@ -136,8 +157,11 @@ namespace FitnessDiary.Core
                 sets);
         }
 
-        public string UpdateExerciseReps(string name, int minReps, int maxReps)
+        public string UpdateExerciseReps(string name, string minRepsAsString, string maxRepsAsString)
         {
+            int minReps = NumberParser.TryParse<int>(minRepsAsString, int.TryParse);
+            int maxReps = NumberParser.TryParse<int>(maxRepsAsString, int.TryParse);
+
             var exercise = this.exerciseHistory.GetByName(name);
 
             CheckIfTheExerciseIsNotPresent(exercise, name);
@@ -149,12 +173,9 @@ namespace FitnessDiary.Core
                 name,
                 minReps,
                 maxReps);
-
         }
 
-        //Add EXCEPTION IF NOT REGISTERED! AND UNIT TESTS!
-
-        public string AddExerciseToTheEndOfTheProgram(string weekDay, string exerciseName)
+        public string AddExerciseAtTheEndOfTheProgram(string weekDay, string exerciseName)
         {
             WeekDays currentDay = WeekDaysParser.Parse(weekDay);
 
@@ -166,13 +187,14 @@ namespace FitnessDiary.Core
 
             return string.Format(
                OutputMessages.ExerciseAddedAtTheEnd,
-               weekDay,
+               currentDay,
                exerciseName);
         }
-        //Add EXCEPTION IF NOT REGISTERED! AND UNIT TESTS!
 
-        public string InsertExerciseSomewhereInTheProgram(string weekDay, int position, string exerciseName)
+        public string InsertExerciseSomewhereInTheProgram(string weekDay, string positionAsString, string exerciseName)
         {
+            int position = NumberParser.TryParse<int>(positionAsString, int.TryParse);
+
             WeekDays currentDay = WeekDaysParser.Parse(weekDay);
 
             var exercise = this.exerciseHistory.GetByName(exerciseName);
@@ -183,14 +205,15 @@ namespace FitnessDiary.Core
 
             return string.Format(
                OutputMessages.ExerciseInsertedAtGivenPosition,
-               weekDay,
+               currentDay,
                exerciseName,
                position);
         }
-        //Add EXCEPTION IF NOT REGISTERED! AND UNIT TESTS!
 
-        public string ChangeExerciseSomewhereInTheProgramWithAnother(string weekDay, int position, string exerciseName)
+        public string ChangeExerciseSomewhereInTheProgramWithAnother(string weekDay, string positionAsString, string exerciseName)
         {
+            int position = NumberParser.TryParse<int>(positionAsString, int.TryParse);
+
             WeekDays currentDay = WeekDaysParser.Parse(weekDay);
 
             var exercise = this.exerciseHistory.GetByName(exerciseName);
@@ -201,21 +224,22 @@ namespace FitnessDiary.Core
 
             return string.Format(
                 OutputMessages.ExerciseChangedAtGivenPosition,
-                weekDay,
+                currentDay,
                 position,
                 exerciseName);
         }
-        //Add EXCEPTION IF NOT REGISTERED! AND UNIT TESTS!
 
-        public string RemoveExerciseFromPositionInTheProgram(string weekDay, int position)
+        public string RemoveExerciseFromPositionInTheProgram(string weekDay, string positionAsString)
         {
+            int position = NumberParser.TryParse<int>(positionAsString, int.TryParse);
+
             WeekDays currentDay = WeekDaysParser.Parse(weekDay);
 
             this.fitnessProgram.Remove(currentDay, position);
 
             return string.Format(
                 OutputMessages.ExerciseRemovedFromTheProgram,
-                weekDay,
+                currentDay,
                 position);
         }
         public string ShowDailyProgram()
@@ -227,17 +251,16 @@ namespace FitnessDiary.Core
 
             return this.dailyTableBuilder.BuildTable();
         }
-
         public string ShowWeeklyProgram()
         {
             this.weeklyTableBuilder = tableBuilderFactory.
                 CreateTableBuilder(
                 "Weekly",
                 this.fitnessProgram.Exercises);
-            
+
             return this.weeklyTableBuilder.BuildTable();
         }
-       
+
 
         //Fitness Program IO
         public void SetCollectionToFitnesProgramIO()
@@ -260,7 +283,8 @@ namespace FitnessDiary.Core
         {
             this.exerciseIO.WriteAllText();
         }
-        
+
+
         //Fillers
         public void ExerciseFiller()
         {
@@ -273,22 +297,21 @@ namespace FitnessDiary.Core
                     ToArray();
 
                 string name = exerciseArguments[0];
-                int sets = int.Parse(exerciseArguments[1]);
-                int minReps = int.Parse(exerciseArguments[2]);
-                int maxReps = int.Parse(exerciseArguments[3]);
-                double maxLifted = double.Parse(exerciseArguments[3]);
+                string sets = exerciseArguments[1];
+                string minReps = exerciseArguments[2];
+                string maxReps = exerciseArguments[3];
+                string maxLifted = exerciseArguments[3];
 
-                if (this.exerciseHistory.GetAll().Any(x=>x.Name==name))
-                {  
+                if (this.exerciseHistory.GetAll().Any(x => x.Name == name))
+                {
                     continue;
                 }
 
                 this.CreateExercise(name, sets, minReps, maxReps);
-                if (maxLifted != 0) this.SetMaxLiftedWeightToExercise(name, maxLifted);
+                if (maxLifted != "0") this.SetMaxLiftedWeightToExercise(name, maxLifted);
 
             }
         }
-
         public void ProgramFiller()
         {
             string[] input = this.fitnessProgramIO.ReadAllLines();
@@ -303,14 +326,14 @@ namespace FitnessDiary.Core
 
                 foreach (var exerciseName in exerciseArguments.Skip(1))
                 {
-                    this.AddExerciseToTheEndOfTheProgram(weekDay, exerciseName);
+                    this.AddExerciseAtTheEndOfTheProgram(weekDay, exerciseName);
                 }
             }
 
         }
 
 
-        //UserIO TO MOCK THEM
+        //UserIO
         public string Register(string name)
         {
             this.userFileIO.Register(name);
@@ -323,41 +346,35 @@ namespace FitnessDiary.Core
         {
             return this.userFileIO.IsTheUserExisting();
         }
-        public void SetUserName()//Only if registered
+        public void SetUserName()
         {
             this.userFileIO.SetUser();
         }
-
         public string GetName()
         {
-           return this.userFileIO.User;
+            return this.userFileIO.User;
         }
-
-
-
-
-
-
-
-
-
+        
 
         //Helpers
         private void CheckIfTheExerciseIsNotPresent(IExercise exercise, string name)
         {
             if (exercise == null)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 throw new InvalidOperationException(
                     string.Format(
                     ExceptionMessages.ExerciseNotFound,
                     name));
             }
         }
+        public void CheckTheNeededLength(int current, int expected)
+        {
+            if (current<expected)
+            {
 
-
-
-
-
-
+                throw new InvalidOperationException(ExceptionMessages.InvalidParametersInput);
+            }
+        }
     }
 }

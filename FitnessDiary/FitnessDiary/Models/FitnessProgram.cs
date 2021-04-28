@@ -52,7 +52,6 @@ namespace FitnessDiary.Models
             int numberToAdd = number - 1;
             CheckNumber(numberToAdd);
             CheckNumberIfItsBiggerThanTheListCapacity(day, number);
-
             
             this.exercises[day].RemoveAt(numberToAdd);
         }
@@ -87,9 +86,6 @@ namespace FitnessDiary.Models
             {
                 throw new ArgumentException(ExceptionMessages.InvalidNumberUpperBorder);
             }
-
-            
         }
-
     }
 }

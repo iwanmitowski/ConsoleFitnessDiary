@@ -13,7 +13,6 @@ namespace FitnessDiary.Models.Contracts
         void Remove(WeekDays day, int number);
 
         void Change(WeekDays day, int number, IExercise exercise);
-               
 
     }
 }

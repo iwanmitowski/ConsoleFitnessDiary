@@ -43,7 +43,6 @@ namespace FitnessDiary.Core
                     name = consoleInputReader.ReadLine();
                     this.consoleInputWriter.WriteLine(this.controller.Register(name));
                     this.consoleInputWriter.WriteLine(UIMessagesInvoker.CreateYourFirstExercise());
-
                 }
                 else
                 {
@@ -51,122 +50,162 @@ namespace FitnessDiary.Core
                     name = this.controller.GetName();
                     this.consoleInputWriter.WriteLine(UIMessagesInvoker.WelcomeMessage(name));
                     this.consoleInputWriter.WriteLine(this.controller.ShowDailyProgram());
-                    //this.consoleInputWriter.WriteLine(this.controller.ShowWeeklyProgram());
                 }
 
-
-
-                string input = this.consoleInputReader.ReadLine();
-
-                while (input != "3")
+                while (true)
                 {
-                    this.consoleInputWriter.WriteLine(UIMessagesInvoker.OptionExercise());
-                    this.consoleInputWriter.WriteLine(UIMessagesInvoker.OptionFitnessProgram());
-                    var message = this.ExecuteCommand(input);
+                    try
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+                        this.consoleInputWriter.WriteLine(UIMessagesInvoker.MainMenu());
 
-                    input = this.consoleInputReader.ReadLine();
-                    //Console.Clear(); ???
+                        string input = this.consoleInputReader.ReadLine();
+                        if (input == "3")
+                        {
+                            break;
+                        }
+
+                        var message = this.ExecuteCommand(input);
+
+                        this.controller.NormalTextColor();
+
+                        if (message == "BACK")
+                        {
+                            continue;
+                        }
+
+                        this.consoleInputWriter.WriteLine(message);
+                        this.consoleInputWriter.WriteLine(string.Empty);
+                    }
+                    catch (ArgumentException ae)
+                    {
+                        this.controller.ExceptionTextColor();
+
+                        this.consoleInputWriter.WriteLine(ae.Message);
+                    }
+                    catch (InvalidOperationException ioe)
+                    {
+                        this.controller.ExceptionTextColor();
+
+                        this.consoleInputWriter.WriteLine(ioe.Message);
+                    }
+                    catch (Exception missedex)
+                    {
+                        this.controller.ExceptionTextColor();
+
+                        this.consoleInputWriter.WriteLine(missedex.Message);
+                    }
+                    finally
+                    {
+                        this.controller.NormalTextColor();
+                    }
                 }
 
                 this.consoleInputWriter.WriteLine(UIMessagesInvoker.SeeYouTomorrow(name));
 
-                //string name = "Single Leg Deadlift";
-                //string name1 = "Bench ";
-                //string name2 = "bicarki";
-                //string name3 = "triceps";
-                //string name4 = "alo sashko";
-                //int sets = 20;
-                //int sets1 = 20;
-                //int min = 20;
-                //int min1 = 20;
-                //int max = 20;
-                //int max1 = 20;
-                //double maxLifted = 160.25;
-
-                ////this.controller.AddExerciseToTheEndOfTheProgram("saturday", name4);
-
-
-                //this.controller.WriteTheFitnessProgramInFile();// накрая на итерацията трябва да слагам това !!!!!!!!!!!!!!!!!
-                //this.controller.WriteAllExercisesFromTheExerciseHistoryInFile();// накрая на итерацията трябва да слагам това !!!!!!!!!!!!!!!!!
-
-
+                this.controller.WriteTheFitnessProgramInFile();
+                this.controller.WriteAllExercisesFromTheExerciseHistoryInFile();
             }
             catch (ArgumentException ae)
             {
+                this.controller.ExceptionTextColor();
+
                 this.consoleInputWriter.WriteLine(ae.Message);
             }
             catch (InvalidOperationException ioe)
             {
+                this.controller.ExceptionTextColor();
+
                 this.consoleInputWriter.WriteLine(ioe.Message);
+            }
+            catch (Exception missedex)
+            {
+                this.controller.ExceptionTextColor();
+
+                this.consoleInputWriter.WriteLine(missedex.Message);
+            }
+            finally
+            {
+                this.controller.NormalTextColor();
             }
         }
 
-        //to show the messages
         private string ExecuteCommand(string input)
         {
-
             string message = string.Empty;
 
             if (input == "1")
             {
                 this.consoleInputWriter.WriteLine(UIMessagesInvoker.ExerciseOptions());
 
-                input = this.consoleInputReader.ReadLine();
+                input = this.consoleInputReader.ReadLine().ToUpper();
 
                 if (input == "A")
                 {
-                    string[] arguments = this.consoleInputReader.
-                        ReadLine().
-                        Split(" ", StringSplitOptions.RemoveEmptyEntries).
-                        ToArray();
+                    this.consoleInputWriter.WriteLine(UIMessagesInvoker.CreateExerciseInstructions());
 
-                    int number = 0;
+                    string[] arguments = this.consoleInputReader.
+                          ReadLine().
+                          Split(",", StringSplitOptions.RemoveEmptyEntries).
+                          Select(x => x.Trim()).
+                          ToArray();
 
                     string name = arguments[0];
-                    int sets = int.TryParse(arguments[1], out number) ? number : -1;
-                    int minReps = int.TryParse(arguments[2], out number) ? number : -1;
-                    int maxReps = int.TryParse(arguments[3], out number) ? number : -1;
+                    string sets = arguments[1];
+                    string minReps = arguments[2];
+                    string maxReps = arguments[3];
 
                     message = this.controller.CreateExercise(name, sets, minReps, maxReps);
                 }
                 else if (input == "B")
                 {
+                    this.consoleInputWriter.WriteLine(UIMessagesInvoker.SetMaxLiftedWeightInstructions());
+
                     string[] arguments = this.consoleInputReader.
-                        ReadLine().
-                        Split(" ", StringSplitOptions.RemoveEmptyEntries).
-                        ToArray();
+                          ReadLine().
+                          Split(",", StringSplitOptions.RemoveEmptyEntries).
+                          Select(x => x.Trim()).
+                          ToArray();
 
                     string name = arguments[0];
-                    double liftedWeight = double.TryParse(arguments[1], out double number) ? number : -1;
+                    string liftedWeight = arguments[1];
 
                     message = this.controller.SetMaxLiftedWeightToExercise(name, liftedWeight);
                 }
                 else if (input == "C")
                 {
+                    this.consoleInputWriter.WriteLine(UIMessagesInvoker.UpdateExerciseSetsInstructions());
+
                     string[] arguments = this.consoleInputReader.
-                        ReadLine().
-                        Split(" ", StringSplitOptions.RemoveEmptyEntries).
-                        ToArray();
+                          ReadLine().
+                          Split(",", StringSplitOptions.RemoveEmptyEntries).
+                          Select(x => x.Trim()).
+                          ToArray();
 
                     string name = arguments[0];
-                    int sets = int.TryParse(arguments[1], out int number) ? number : -1;
+                    string sets = arguments[1];
 
                     message = this.controller.UpdateExerciseSets(name, sets);
                 }
                 else if (input == "D")
                 {
-                    string[] arguments = this.consoleInputReader.
-                        ReadLine().
-                        Split(" ", StringSplitOptions.RemoveEmptyEntries).
-                        ToArray();
+                    this.consoleInputWriter.WriteLine(UIMessagesInvoker.UpdateExerciseRepsInstructions());
 
-                    int number = 0;
+                    string[] arguments = this.consoleInputReader.
+                           ReadLine().
+                           Split(",", StringSplitOptions.RemoveEmptyEntries).
+                           Select(x => x.Trim()).
+                           ToArray();
 
                     string name = arguments[0];
-                    int minReps = int.TryParse(arguments[1], out number) ? number : -1;
-                    int maxReps = int.TryParse(arguments[2], out number) ? number : -1;
+                    string minReps = arguments[1];
+                    string maxReps = arguments[2];
 
                     message = this.controller.UpdateExerciseReps(name, minReps, maxReps);
+                }
+                else if (input == "BACK")
+                {
+                    message = "BACK";
                 }
                 else
                 {
@@ -177,61 +216,80 @@ namespace FitnessDiary.Core
             {
                 this.consoleInputWriter.WriteLine(UIMessagesInvoker.FitnessProgramOptions());
 
-                input = this.consoleInputReader.ReadLine();
+                input = this.consoleInputReader.ReadLine().ToUpper();
 
                 if (input == "A")
                 {
+                    Console.Clear();
                     message = this.controller.ShowWeeklyProgram();
                 }
                 else if (input == "B")
                 {
+                    this.consoleInputWriter.WriteLine(UIMessagesInvoker.AddExerciseAtTheEndOfTheProgramInstructions());
+
                     string[] arguments = this.consoleInputReader.
                           ReadLine().
-                          Split(" ", StringSplitOptions.RemoveEmptyEntries).
+                          Split(",", StringSplitOptions.RemoveEmptyEntries).
+                          Select(x => x.Trim()).
                           ToArray();
 
                     string weekDay = arguments[0];
                     string exerciseName = arguments[1];
 
-                    message = this.controller.AddExerciseToTheEndOfTheProgram(weekDay, exerciseName);
+                    message = this.controller.AddExerciseAtTheEndOfTheProgram(weekDay, exerciseName);
                 }
                 else if (input == "C")
                 {
+                    this.consoleInputWriter.WriteLine(UIMessagesInvoker.InsertAndChangeExerciseInstructions());
+
                     string[] arguments = this.consoleInputReader.
                           ReadLine().
-                          Split(" ", StringSplitOptions.RemoveEmptyEntries).
+                          Split(",", StringSplitOptions.RemoveEmptyEntries).
+                          Select(x => x.Trim()).
                           ToArray();
 
                     string weekDay = arguments[0];
-                    int position = int.TryParse(arguments[1], out int number) ? number : -1;
+                    string position = arguments[1];
                     string exerciseName = arguments[2];
 
                     message = this.controller.InsertExerciseSomewhereInTheProgram(weekDay, position, exerciseName);
                 }
                 else if (input == "D")
                 {
+                    this.consoleInputWriter.WriteLine(UIMessagesInvoker.InsertAndChangeExerciseInstructions());
+
                     string[] arguments = this.consoleInputReader.
                           ReadLine().
-                          Split(" ", StringSplitOptions.RemoveEmptyEntries).
+                          Split(",", StringSplitOptions.RemoveEmptyEntries).
+                          Select(x => x.Trim()).
                           ToArray();
 
                     string weekDay = arguments[0];
-                    int position = int.TryParse(arguments[1], out int number) ? number : -1;
+                    string position = arguments[1];
                     string exerciseName = arguments[2];
 
                     message = this.controller.ChangeExerciseSomewhereInTheProgramWithAnother(weekDay, position, exerciseName);
                 }
                 else if (input == "E")
                 {
+                    this.consoleInputWriter.WriteLine(UIMessagesInvoker.RemoveExerciseInstructions());
+
                     string[] arguments = this.consoleInputReader.
                           ReadLine().
-                          Split(" ", StringSplitOptions.RemoveEmptyEntries).
+                          Split(",", StringSplitOptions.RemoveEmptyEntries).
+                          Select(x => x.Trim()).
                           ToArray();
 
+                    this.controller.CheckTheNeededLength(arguments.Length, 2);
+
                     string weekDay = arguments[0];
-                    int position = int.TryParse(arguments[1], out int number) ? number : -1;
+                    string position = arguments[1];
 
                     message = this.controller.RemoveExerciseFromPositionInTheProgram(weekDay, position);
+                }
+                else if (input == "BACK")
+                {
+                    message = "BACK";
                 }
                 else
                 {
@@ -242,6 +300,9 @@ namespace FitnessDiary.Core
             {
                 message = UIMessagesInvoker.InvalidInput();
             }
+
+            this.controller.WriteTheFitnessProgramInFile();
+            this.controller.WriteAllExercisesFromTheExerciseHistoryInFile();
 
             return message;
         }

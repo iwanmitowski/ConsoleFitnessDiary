@@ -15,6 +15,7 @@
         public const string ExerciseExists = "Exercise {0} already exists!";
         public const string ExerciseNotFound = "Exercise {0} not found. Create it first!";
         public const string UserNameNotSet = "There is not set username!";
-        
+        public const string InvalidInputType = "The input was not correct! Try again!";
+        public const string InvalidParametersInput = "The parameters are less than expected. Ensure you haven't missed something!";
     }
 }

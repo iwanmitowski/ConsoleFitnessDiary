@@ -9,7 +9,6 @@ namespace FitnessDiary.IO
         {
             Console.Write(message);
         }
-
         public void WriteLine(string message)
         {
             Console.WriteLine(message);

@@ -68,6 +68,5 @@ namespace FitnessDiary.Tests
         {
             Assert.Throws<InvalidOperationException>(() => fitnessProgram.Remove(WeekDays.Monday, 1));
         }
-
     }
 }

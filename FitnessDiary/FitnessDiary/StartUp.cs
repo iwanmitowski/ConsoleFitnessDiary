@@ -20,7 +20,7 @@ namespace FitnessDiary
 
             var fitnessProgramIO = new FitnessProgramIO(Path.Combine("..", "..", "..", "DataBase", "FitnessProgram.txt"));
             var exerciseIO = new ExerciseIO(Path.Combine("..", "..", "..", "DataBase", "CreatedExercises.txt"));
-            var userFileIO = new UserFileIO(Path.Combine("..", "..", "..", "DataBase", "User.txt")); 
+            var userFileIO = new UserFileIO(Path.Combine("..", "..", "..", "DataBase", "User.txt"));
 
             var controller = new Controller(exerciseFactory,
                 exerciseHistory,
@@ -38,9 +38,8 @@ namespace FitnessDiary
                 controller,
                 consoleReader,
                 consoleWriter);
-
+            
             engine.Run();
-
         }
     }
 }

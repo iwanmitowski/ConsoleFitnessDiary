@@ -39,14 +39,37 @@ namespace FitnessDiary.Utilities.Messages
             return OutputMessages.FitnessProgramOptions;
         }
 
+        static public string OptionExit()
+        {
+            return OutputMessages.OptionExit;
+        }
+        static public string OptionBack()
+        {
+            return OutputMessages.OptionBack;
+        }
+
+        static public string MainMenu()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine();
+            sb.AppendLine(OutputMessages.ExerciseOptions);
+            sb.AppendLine(OutputMessages.FitnessProgramOptions);
+            sb.AppendLine(OutputMessages.OptionExit);
+
+            return sb.ToString();
+        }
         static public string ExerciseOptions()
         {
             StringBuilder sb = new StringBuilder();
 
+            sb.AppendLine();
             sb.AppendLine(OutputMessages.ExerciseOptionsA);
             sb.AppendLine(OutputMessages.ExerciseOptionsB);
             sb.AppendLine(OutputMessages.ExerciseOptionsC);
             sb.AppendLine(OutputMessages.ExerciseOptionsD);
+            sb.AppendLine(OutputMessages.OptionBack);
+
             return sb.ToString();
         }
 
@@ -54,11 +77,13 @@ namespace FitnessDiary.Utilities.Messages
         {
             StringBuilder sb = new StringBuilder();
 
+            sb.AppendLine();
             sb.AppendLine(OutputMessages.FitnessProgramOptionsA);
             sb.AppendLine(OutputMessages.FitnessProgramOptionsB);
             sb.AppendLine(OutputMessages.FitnessProgramOptionsC);
             sb.AppendLine(OutputMessages.FitnessProgramOptionsD);
             sb.AppendLine(OutputMessages.FitnessProgramOptionsE);
+            sb.AppendLine(OutputMessages.OptionBack);
 
             return sb.ToString();
         }
@@ -67,6 +92,35 @@ namespace FitnessDiary.Utilities.Messages
         {
             return OutputMessages.CreateYourFirstExercise;
 
+        }
+
+        static public string CreateExerciseInstructions()
+        {
+            return OutputMessages.CreateExerciseInstructions;
+        }
+        static public string SetMaxLiftedWeightInstructions()
+        {
+            return OutputMessages.SetMaxLiftedWeightInstructions;
+        }
+        static public string UpdateExerciseSetsInstructions()
+        {
+            return OutputMessages.UpdateExerciseSetsInstructions;
+        }
+        static public string UpdateExerciseRepsInstructions()
+        {
+            return OutputMessages.UpdateExerciseRepsInstructions;
+        }
+        static public string AddExerciseAtTheEndOfTheProgramInstructions()
+        {
+            return OutputMessages.AddExerciseAtTheEndOfTheProgramInstructions;
+        }
+        static public string InsertAndChangeExerciseInstructions()
+        {
+            return OutputMessages.InsertAndChangeExerciseInstructions;
+        }
+        static public string RemoveExerciseInstructions()
+        {
+            return OutputMessages.RemoveExerciseInstructions;
         }
     }
 }

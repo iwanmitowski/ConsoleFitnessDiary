@@ -29,8 +29,15 @@
         public const string FitnessProgramOptionsC = "   C - Insert specific exercise in the program";
         public const string FitnessProgramOptionsD = "   D - Change exercise in the program";
         public const string FitnessProgramOptionsE = "   E - Remove exercise from position in the program";
+        public const string OptionExit = "3 - Exit";
+        public const string OptionBack = "   Back - to return to the previous menu";
         public const string CreateYourFirstExercise = "It's time to create your first exercise!";
-       
-
+        public const string CreateExerciseInstructions = "Please enter: Exercise name, sets, minimum repetitions, maximum repetitions.";
+        public const string SetMaxLiftedWeightInstructions = "Please enter: Exercise name, maximum lifted weight. ";
+        public const string UpdateExerciseSetsInstructions = "Please enter: Exercise name, new sets";
+        public const string UpdateExerciseRepsInstructions = "Please enter: Exercise name, new minimum and maximum repetitions.";
+        public const string AddExerciseAtTheEndOfTheProgramInstructions = "Please enter: Day of week, exercise name.";
+        public const string InsertAndChangeExerciseInstructions = "Please enter: Day of week, position, exercise name.";
+        public const string RemoveExerciseInstructions = "Please enter: Day of week, position.";
     }
 }

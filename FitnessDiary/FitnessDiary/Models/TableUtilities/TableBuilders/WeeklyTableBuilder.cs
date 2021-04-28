@@ -24,9 +24,10 @@ namespace FitnessDiary.Models.TableUtilities
                 return OutputMessages.AddExercisesToTheProgram;
             }
 
-            Table.SetWindowSize();
             
             Table.SetTableWidth(longestExerciseName * 8 + 9);
+            Table.SetWindowSize();
+            Table.ClearTableBuilder();
             Table.PrintTop();
             Table.PrintRow("Number", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
 
@@ -172,8 +173,5 @@ namespace FitnessDiary.Models.TableUtilities
 
             return biggest;
         }
-
-
-
     }
 }
