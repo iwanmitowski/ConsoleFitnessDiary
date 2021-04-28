@@ -7,7 +7,7 @@
 
 ### Registration
 
-	o During the first launch, the users must register themselves by writing their name. Afterwards they are invited to create and add the first exercise to the data base. 
+	o Register new user during the first launch by name
 
 ### Exercise options
 
@@ -32,7 +32,7 @@
 	o Users have option to remove exercise from specific position in the program
 
 ### Database
-	o Selfupdating .txt files after specifict actions
+	o Self-updating .txt files after specific actions
 	
 ### What i have learnt 💡
 
