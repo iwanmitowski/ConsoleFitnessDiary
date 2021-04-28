@@ -150,6 +150,8 @@ namespace FitnessDiary.Core
                           Select(x => x.Trim()).
                           ToArray();
 
+                    this.controller.CheckTheNeededLength(arguments.Length, 4);
+
                     string name = arguments[0];
                     string sets = arguments[1];
                     string minReps = arguments[2];
@@ -167,6 +169,8 @@ namespace FitnessDiary.Core
                           Select(x => x.Trim()).
                           ToArray();
 
+                    this.controller.CheckTheNeededLength(arguments.Length, 2);
+
                     string name = arguments[0];
                     string liftedWeight = arguments[1];
 
@@ -182,6 +186,8 @@ namespace FitnessDiary.Core
                           Select(x => x.Trim()).
                           ToArray();
 
+                    this.controller.CheckTheNeededLength(arguments.Length, 2);
+
                     string name = arguments[0];
                     string sets = arguments[1];
 
@@ -196,6 +202,8 @@ namespace FitnessDiary.Core
                            Split(",", StringSplitOptions.RemoveEmptyEntries).
                            Select(x => x.Trim()).
                            ToArray();
+
+                    this.controller.CheckTheNeededLength(arguments.Length, 3);
 
                     string name = arguments[0];
                     string minReps = arguments[1];
