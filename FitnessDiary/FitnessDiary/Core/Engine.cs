@@ -241,6 +241,8 @@ namespace FitnessDiary.Core
                           Select(x => x.Trim()).
                           ToArray();
 
+                    this.controller.CheckTheNeededLength(arguments.Length, 3);
+
                     string weekDay = arguments[0];
                     string exerciseName = arguments[1];
 
@@ -255,6 +257,8 @@ namespace FitnessDiary.Core
                           Split(",", StringSplitOptions.RemoveEmptyEntries).
                           Select(x => x.Trim()).
                           ToArray();
+
+                    this.controller.CheckTheNeededLength(arguments.Length, 3);
 
                     string weekDay = arguments[0];
                     string position = arguments[1];
@@ -271,6 +275,8 @@ namespace FitnessDiary.Core
                           Split(",", StringSplitOptions.RemoveEmptyEntries).
                           Select(x => x.Trim()).
                           ToArray();
+
+                    this.controller.CheckTheNeededLength(arguments.Length, 3);
 
                     string weekDay = arguments[0];
                     string position = arguments[1];
