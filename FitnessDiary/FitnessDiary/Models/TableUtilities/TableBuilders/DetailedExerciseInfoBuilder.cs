@@ -1,4 +1,5 @@
-﻿using FitnessDiary.Utilities.Enums;
+﻿using FitnessDiary.Models.TableUtilities.TableBuilders.Contracts;
+using FitnessDiary.Utilities.Enums;
 using FitnessDiary.Utilities.Messages;
 using System;
 using System.Collections.Generic;
@@ -8,14 +9,15 @@ using System.Threading.Tasks;
 
 namespace FitnessDiary.Models.TableUtilities.TableBuilders
 {
-    public class DetailedExerciseInfoBuilder
+    public class DetailedExerciseInfoBuilder:ITableBuilder
     {
-        List<IExercise> exercises;
-        public DetailedExerciseInfoBuilder(List<IExercise> exercises)
+        private readonly IReadOnlyCollection<IExercise> exercises;
+        public DetailedExerciseInfoBuilder(IReadOnlyCollection<IExercise> exercises)
         {
             this.exercises = exercises;
         }
-        public bool IsEmpty => this.exercises.Count == 0;
+        
+        public bool IsEmpty => IsEmptyTable();
 
         public string BuildTable()
         {
@@ -26,14 +28,16 @@ namespace FitnessDiary.Models.TableUtilities.TableBuilders
 
             int longestExerciseName = GetLongestExerciseName();
 
-            Table.SetTableWidth(longestExerciseName * 8 + 9);
+            Table.SetTableWidth(longestExerciseName * 8 + 11);
             Table.SetWindowSize();
             Table.ClearTableBuilder();
             Table.PrintTop();
             Table.PrintRow("Exercise Name", "Sets", "Min Reps", "Max Reps", "Max Lifted");
-
+            
             foreach (var ex in this.exercises)
             {
+                Table.PrintLine();
+
                 Table.PrintRow(
                     ex.Name,
                     $"{ex.Sets}",
@@ -46,6 +50,12 @@ namespace FitnessDiary.Models.TableUtilities.TableBuilders
             Table.ShowTheBeginningOfTheTable();
             return Table.ReturnTheReadyTable();
         }
+
+        public bool IsEmptyTable()
+        {
+           return this.exercises.Count == 0;
+        }
+
         private int GetLongestExerciseName()
         {
             int minLength = 20;

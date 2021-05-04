@@ -10,7 +10,7 @@ namespace FitnessDiary.Core.Factories
 {
     public class TableBuilderFactory : ITableBuilderFactory
     {
-        public ITableBuilder CreateTableBuilder(string type, IReadOnlyDictionary<WeekDays, List<IExercise>> exercises)
+        public ITableBuilder CreateTableBuilder<T>(string type, T exercises)
         {
             var tableType = Assembly
                 .GetCallingAssembly()
@@ -24,10 +24,10 @@ namespace FitnessDiary.Core.Factories
             }
 
             ITableBuilder tableBuilder = null;
-
+            
             try
             {
-                tableBuilder = (ITableBuilder)Activator.CreateInstance(tableType, (Dictionary<WeekDays, List<IExercise>>)exercises);
+                tableBuilder = (ITableBuilder)Activator.CreateInstance(tableType, exercises);
             }
             catch (TargetInvocationException ex)
             {

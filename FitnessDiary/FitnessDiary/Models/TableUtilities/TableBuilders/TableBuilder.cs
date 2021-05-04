@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace FitnessDiary.Models.TableUtilities
 {
-    public abstract class TableBuilder:ITableBuilder
+    public abstract class TableBuilder : ITableBuilder
     {
         protected readonly IReadOnlyDictionary<WeekDays, List<IExercise>> exercises;
 
@@ -18,7 +18,7 @@ namespace FitnessDiary.Models.TableUtilities
         public bool IsEmptyTable()
         {
             int exercisesCount = this.exercises.Values.Select(x => x.Count).Sum();
-            return exercisesCount==0;
+            return exercisesCount == 0;
         }
     }
 }
