@@ -8,10 +8,8 @@ using FitnessDiary.Utilities.Enums;
 using FitnessDiary.Utilities.Messages;
 using FitnessDiary.Utilities.Parsers;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace FitnessDiary.Core
 {
@@ -38,10 +36,11 @@ namespace FitnessDiary.Core
         private ITableBuilderFactory tableBuilderFactory;
         private ITableBuilder dailyTableBuilder;
         private ITableBuilder weeklyTableBuilder;
+        private ITableBuilder detailedExerciseInfoBuilder;
 
-        IFileIO fitnessProgramIO;
-        IFileIO exerciseIO;
-        IUserFileIO userFileIO;
+        private IFileIO fitnessProgramIO;
+        private IFileIO exerciseIO;
+        private IUserFileIO userFileIO;
         private IFitnessProgram fitnessProgram;
         public Controller(IExerciseFactory exerciseFactory,
             IExerciseHistory exerciseHistory,
@@ -177,11 +176,17 @@ namespace FitnessDiary.Core
                 maxReps);
         }
 
-        //To Do as table
         public string ShowDetailedExerciseInfo()
         {
-            throw new NotImplementedException();
+            var exercises = this.exerciseHistory.GetAll();
+            this.detailedExerciseInfoBuilder = tableBuilderFactory.
+                CreateTableBuilder(
+                "Detailed",
+                exercises);
+                        
+            return this.detailedExerciseInfoBuilder.BuildTable();
         }
+
         public string AddExerciseAtTheEndOfTheProgram(string weekDay, string exerciseName)
         {
             WeekDays currentDay = WeekDaysParser.Parse(weekDay);
@@ -235,7 +240,6 @@ namespace FitnessDiary.Core
                 position,
                 exerciseName);
         }
-
         public string RemoveExerciseFromPositionInTheProgram(string weekDay, string positionAsString)
         {
             int position = NumberParser.TryParse<int>(positionAsString, int.TryParse);
@@ -249,6 +253,7 @@ namespace FitnessDiary.Core
                 currentDay,
                 position);
         }
+
         public string ShowDailyProgram()
         {
             this.dailyTableBuilder = tableBuilderFactory.
@@ -319,6 +324,7 @@ namespace FitnessDiary.Core
 
             }
         }
+
         public void ProgramFiller()
         {
             string[] input = this.fitnessProgramIO.ReadAllLines();
@@ -375,11 +381,11 @@ namespace FitnessDiary.Core
                     name));
             }
         }
+
         public void CheckTheNeededLength(int current, int expected)
         {
             if (current<expected)
             {
-
                 throw new InvalidOperationException(ExceptionMessages.InvalidParametersInput);
             }
         }

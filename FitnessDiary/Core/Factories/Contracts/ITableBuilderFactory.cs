@@ -6,6 +6,6 @@ namespace FitnessDiary.Core.Factories.Contracts
 {
     public interface ITableBuilderFactory
     {
-        ITableBuilder CreateTableBuilder(string type, IReadOnlyDictionary<WeekDays, List<IExercise>> exercises);
+        ITableBuilder CreateTableBuilder<T>(string type, T exercises);
     }
 }
