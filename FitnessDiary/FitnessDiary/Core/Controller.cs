@@ -175,6 +175,7 @@ namespace FitnessDiary.Core
                 minReps,
                 maxReps);
         }
+
         public string ShowDetailedExerciseInfo()
         {
             var exercises = this.exerciseHistory.GetAll();
@@ -185,6 +186,7 @@ namespace FitnessDiary.Core
                         
             return this.detailedExerciseInfoBuilder.BuildTable();
         }
+
         public string AddExerciseAtTheEndOfTheProgram(string weekDay, string exerciseName)
         {
             WeekDays currentDay = WeekDaysParser.Parse(weekDay);
@@ -238,7 +240,6 @@ namespace FitnessDiary.Core
                 position,
                 exerciseName);
         }
-
         public string RemoveExerciseFromPositionInTheProgram(string weekDay, string positionAsString)
         {
             int position = NumberParser.TryParse<int>(positionAsString, int.TryParse);
@@ -252,6 +253,7 @@ namespace FitnessDiary.Core
                 currentDay,
                 position);
         }
+
         public string ShowDailyProgram()
         {
             this.dailyTableBuilder = tableBuilderFactory.
@@ -322,6 +324,7 @@ namespace FitnessDiary.Core
 
             }
         }
+
         public void ProgramFiller()
         {
             string[] input = this.fitnessProgramIO.ReadAllLines();
@@ -378,11 +381,11 @@ namespace FitnessDiary.Core
                     name));
             }
         }
+
         public void CheckTheNeededLength(int current, int expected)
         {
             if (current<expected)
             {
-
                 throw new InvalidOperationException(ExceptionMessages.InvalidParametersInput);
             }
         }
