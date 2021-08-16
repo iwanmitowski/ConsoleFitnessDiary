@@ -34,7 +34,7 @@
 ### Database
 	o Self-updating .txt files after specific actions
 	
-### What i have learnt 💡
+### What I have learnt 💡
 
 	o Building tables in console application 
 	
